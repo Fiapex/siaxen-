@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Incubators - Siaxen</title>
+<meta name="description" content="Raise the structural quality of your MedTech portfolio. Siaxen resolves the commercial architecture gaps that hold your most promising ventures back.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://siaxen.com/incubators">
+<meta property="og:title" content="For Incubators - Siaxen">
+<meta property="og:description" content="Raise the structural quality of your MedTech portfolio through synchronized commercialization architecture.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://siaxen.com/incubators">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header" role="banner">
+<div class="site-header__inner">
+  <a href="index.html" class="logo" aria-label="Siaxen Home">
+    <img src="assets/Siaxen wordmark.svg" alt="Siaxen" width="110" height="24">
+  </a>
+  <nav class="nav-desktop" role="navigation" aria-label="Main navigation">
+    <a href="about.html" class="nav__link">About</a>
+    <a href="inventors.html" class="nav__link">Inventors</a>
+    <a href="investors.html" class="nav__link">Investors</a>
+    <a href="incubators.html" class="nav__link nav__link--active">Incubators</a>
+    <a href="partners.html" class="nav__link">Partners</a>
+    <a href="dna.html" class="nav__link">DNA</a>
+    <a href="triage.html" class="nav__link">TRIAGE&#8482;</a>
+    <a href="insights.html" class="nav__link">Insights</a>
+  </nav>
+  <div class="header-cta">
+    <a href="contact.html" class="header-cta__primary">Contact us</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+</header>
+
+<!-- ══ MOBILE NAV ══ -->
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <div class="mobile-nav__links">
+    <a href="about.html" class="mobile-nav__link">About</a>
+    <a href="inventors.html" class="mobile-nav__link">Inventors</a>
+    <a href="investors.html" class="mobile-nav__link">Investors</a>
+    <a href="incubators.html" class="mobile-nav__link">Incubators</a>
+    <a href="partners.html" class="mobile-nav__link">Partners</a>
+    <a href="dna.html" class="mobile-nav__link">DNA</a>
+    <a href="triage.html" class="mobile-nav__link">TRIAGE&#8482;</a>
+    <a href="insights.html" class="mobile-nav__link">Insights</a>
+  </div>
+  <div class="mobile-nav__bottom">
+    <a href="contact.html" class="mobile-nav__cta">Contact us</a>
+  </div>
+</div>
+
+<!-- ══ PAGE HERO ══ -->
+<section class="page-hero">
+<canvas id="heroGridAnim" style="position:absolute;inset:0;width:100%;height:100%;z-index:0" aria-hidden="true"></canvas>
+
+<div class="page-hero__inner">
+  <div class="page-hero__text">
+    <p class="eyebrow">For Incubators &amp; Accelerators</p>
+    <h1>
+      <span>Raise the readiness</span><br>
+      <span style="color:#3A7CA5">of your MedTech portfolio.</span>
+    </h1>
+    <p class="page-hero__desc">We resolve the commercial architecture gaps that hold your most promising MedTech ventures back - increasing their credibility, fundability, and structural coherence.</p>
+  </div>
+  <div class="page-hero__visual" aria-hidden="true">
+    <canvas id="heroAnim" style="width:100%;max-width:762px;aspect-ratio:1" width="1000" height="1000"></canvas>
+  </div>
+</div>
+
+<script>
+(function(){
+  var canvas=document.getElementById('heroAnim');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var W=1000,H=1000;
+  canvas.width=W;canvas.height=H;
+  var cx=W/2,time=0;
+  function rgba(a){return 'rgba(58,124,165,'+a+')';}
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function easeIO(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+
+  var CYCLE=10;
+  var planes=[
+    {y:760,w:520,h:92,op:0.25},
+    {y:560,w:445,h:86,op:0.35},
+    {y:370,w:370,h:80,op:0.45},
+    {y:190,w:295,h:75,op:0.55}
+  ];
+
+  // Fixed target dot (center of top plane destination)
+  var targetDotY=190+75/2;
+
+  function frame(){
+    time+=0.016;ctx.clearRect(0,0,W,H);
+
+    // Background glow
+    var g=ctx.createRadialGradient(cx,420,0,cx,420,480);
+    g.addColorStop(0,rgba(0.12));g.addColorStop(0.5,rgba(0.04));g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();ctx.arc(cx,420,480,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+
+    var t=(time%CYCLE)/CYCLE;
+
+    // Fixed target dot (always visible — the goal)
+    var targetPulse=0.55+0.25*Math.sin(time*0.5);
+    var tng=ctx.createRadialGradient(cx,targetDotY,0,cx,targetDotY,38);
+    tng.addColorStop(0,rgba(targetPulse*0.4));tng.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();ctx.arc(cx,targetDotY,38,0,Math.PI*2);ctx.fillStyle=tng;ctx.fill();
+    ctx.beginPath();ctx.arc(cx,targetDotY,12,0,Math.PI*2);ctx.fillStyle=rgba(targetPulse);ctx.fill();
+
+    // Pulse ring from target dot
+    var pT=(time*0.12)%1;var pR=10+pT*90;
+    ctx.beginPath();ctx.arc(cx,targetDotY,pR,0,Math.PI*2);ctx.strokeStyle=rgba(0.1*(1-pT));ctx.lineWidth=2.5;ctx.stroke();
+
+    // Stacking planes (rise from bottom toward the target)
+    for(var i=0;i<planes.length;i++){
+      var p=planes[i];
+      var delay=i*0.1;
+      var pt=Math.max(0,Math.min(1,(t-delay)/0.3));
+      if(t>0.72) pt=Math.max(0,1-(t-0.72)/0.28);
+      var rise=easeIO(pt);
+
+      var startY=850;
+      var curY=lerp(startY,p.y,rise);
+      var breathe=1+0.015*Math.sin(time*0.35+i*1.2);
+      var w=p.w*breathe;
+      var curOp=p.op*rise;
+
+      if(curOp<0.02)continue;
+
+      // Rectangle stroke with glow
+      ctx.strokeStyle=rgba(curOp);ctx.lineWidth=9;
+      ctx.shadowColor=rgba(curOp*0.3);ctx.shadowBlur=12;
+      ctx.strokeRect(cx-w/2,curY,w,p.h);
+      ctx.shadowColor='transparent';ctx.shadowBlur=0;
+    }
+
+    requestAnimationFrame(frame);
+  }
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){time=0;frame();}else{requestAnimationFrame(frame);}
+})();
+</script>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SECTION A - THE ENGAGEMENT ══ -->
+<section class="section section--alt" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px);background:rgba(15,19,30,.48)">
+<div class="container">
+
+  <!-- Two-column: Visual left + Text right -->
+  <div class="reveal" style="display:grid;grid-template-columns:.4fr .6fr;gap:clamp(40px,5vw,72px);align-items:center">
+    
+    <!-- Left: Network diagram visual -->
+    <div style="display:flex;align-items:center;justify-content:center" aria-hidden="true">
+      <svg viewBox="0 0 340 340" fill="none" style="width:100%;max-width:300px" xmlns="http://www.w3.org/2000/svg">
+        <style>
+          @keyframes ringExpand{0%{r:8;opacity:.3}100%{r:38;opacity:0}}
+          @keyframes nodeRing{0%{r:5;opacity:.25}100%{r:18;opacity:0}}
+          .eng-pulse{animation:ringExpand 4s ease-out infinite}
+          .eng-node1{animation:nodeRing 4s ease-out infinite 1s}
+          .eng-node2{animation:nodeRing 4s ease-out infinite 2s}
+          .eng-node3{animation:nodeRing 4s ease-out infinite 3s}
+        </style>
+
+        <!-- Central large node -->
+        <circle cx="170" cy="170" r="50" stroke="#3A7CA5" stroke-width="2.5" opacity=".35" fill="none"/>
+        <circle cx="170" cy="170" r="30" stroke="#3A7CA5" stroke-width="1.5" opacity=".2" fill="none"/>
+        <circle cx="170" cy="170" r="12" fill="#3A7CA5" opacity=".2"/>
+        <circle cx="170" cy="170" r="5" fill="#3A7CA5" opacity=".65"/>
+        <!-- Pulse ring -->
+        <circle class="eng-pulse" cx="170" cy="170" r="8" stroke="#3A7CA5" stroke-width="1.5" opacity=".3" fill="none"/>
+        
+        <!-- Outer node 1 (top-left) -->
+        <circle cx="60" cy="60" r="22" stroke="#3A7CA5" stroke-width="2" opacity=".4" fill="none"/>
+        <circle cx="60" cy="60" r="7" fill="#3A7CA5" opacity=".5"/>
+        <circle class="eng-node1" cx="60" cy="60" r="5" stroke="#3A7CA5" stroke-width="1.5" opacity=".25" fill="none"/>
+        
+        <!-- Outer node 2 (top-right) -->
+        <circle cx="280" cy="60" r="22" stroke="#3A7CA5" stroke-width="2" opacity=".4" fill="none"/>
+        <circle cx="280" cy="60" r="7" fill="#3A7CA5" opacity=".5"/>
+        <circle class="eng-node2" cx="280" cy="60" r="5" stroke="#3A7CA5" stroke-width="1.5" opacity=".25" fill="none"/>
+        
+        <!-- Outer node 3 (bottom) -->
+        <circle cx="170" cy="310" r="22" stroke="#3A7CA5" stroke-width="2" opacity=".4" fill="none"/>
+        <circle cx="170" cy="310" r="7" fill="#3A7CA5" opacity=".5"/>
+        <circle class="eng-node3" cx="170" cy="310" r="5" stroke="#3A7CA5" stroke-width="1.5" opacity=".25" fill="none"/>
+        
+        <!-- Connection lines (from edge of center circle to edge of outer nodes) -->
+        <line x1="135" y1="135" x2="76" y2="76" stroke="#3A7CA5" stroke-width="1.5" opacity=".28"/>
+        <line x1="205" y1="135" x2="264" y2="76" stroke="#3A7CA5" stroke-width="1.5" opacity=".28"/>
+        <line x1="170" y1="220" x2="170" y2="288" stroke="#3A7CA5" stroke-width="1.5" opacity=".28"/>
+      </svg>
+    </div>
+
+    <!-- Right: Text -->
+    <div>
+      <p class="eyebrow" style="color:#3A7CA5;font-size:14px">The Engagement</p>
+      <h2 style="margin-bottom:20px">MedTech expertise<br><span style="color:#3A7CA5">embedded in your ecosystem.</span></h2>
+      <p style="font-size:clamp(14px,1.4vw,16px);color:var(--tx-sub);line-height:1.9;max-width:85%">Siaxen partners with incubators and accelerators to strengthen the commercial readiness of their MedTech portfolio. We embed MedTech-specific commercialization expertise directly into your ecosystem, from light-touch diagnostics for early ventures to deep co-founding partnerships for those with the highest structural potential.</p>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SECTION B - HOW WE ENGAGE ══ -->
+<section class="section" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px)">
+<div class="container">
+
+  <div class="reveal">
+    <p class="eyebrow" style="color:#3A7CA5;font-size:14px">The Process</p>
+    <h2 style="margin-bottom:clamp(40px,5vw,60px)">How we engage<br class="br-mobile"> <span style="color:#3A7CA5">with your program.</span></h2>
+  </div>
+
+  <div class="process-grid" style="display:grid;grid-template-columns:clamp(48px,6vw,80px) 83%;gap:clamp(24px,3vw,40px);align-items:stretch">
+    
+    <!-- Left: Path Animation -->
+    <div style="position:relative" aria-hidden="true">
+      <canvas id="pathAnim" style="position:absolute;top:0;left:0;width:100%;height:100%"></canvas>
+    </div>
+
+    <!-- Right: Cards -->
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <div class="card reveal-d1">
+        <div style="display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+          <svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px;flex-shrink:0"><circle cx="20" cy="20" r="14" stroke="#3A7CA5" stroke-width="1.5" opacity=".35"/><line x1="14" y1="20" x2="26" y2="20" stroke="#3A7CA5" stroke-width="1.5" opacity=".5"/><circle cx="20" cy="20" r="3" fill="#3A7CA5" opacity=".4"/></svg>
+          <div>
+            <h4 class="card__title" style="color:#3A7CA5">01 . Office Hours</h4>
+            <p class="card__text">Free 30-minute strategy diagnostics for your MedTech cohort members. Senior-level insight that surfaces structural blind spots and sharpens value propositions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card reveal-d2">
+        <div style="display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+          <svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px;flex-shrink:0"><rect x="8" y="8" width="24" height="24" stroke="#3A7CA5" stroke-width="1.5" opacity=".35"/><line x1="14" y1="16" x2="26" y2="16" stroke="#3A7CA5" stroke-width="1" opacity=".3"/><line x1="14" y1="22" x2="26" y2="22" stroke="#3A7CA5" stroke-width="1" opacity=".3"/><line x1="14" y1="28" x2="22" y2="28" stroke="#3A7CA5" stroke-width="1" opacity=".3"/></svg>
+          <div>
+            <h4 class="card__title" style="color:#3A7CA5">02 . Portfolio Diagnostics</h4>
+            <p class="card__text">Structured TRIAGE&#8482; assessments for high-potential ventures. Each produces a feasibility report covering regulatory, clinical, market, and capital dimensions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card reveal-d3">
+        <div style="display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+          <svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px;flex-shrink:0"><path d="M12 28 L20 12 L28 28" stroke="#3A7CA5" stroke-width="1.5" opacity=".4" fill="none"/><circle cx="20" cy="12" r="3" fill="#3A7CA5" opacity=".5"/><line x1="20" y1="15" x2="20" y2="28" stroke="#3A7CA5" stroke-width="1" opacity=".3"/></svg>
+          <div>
+            <h4 class="card__title" style="color:#3A7CA5">03 . Venture Co-Building</h4>
+            <p class="card__text">Equity-based co-founding for ventures that pass the TRIAGE&#8482; quality gate. Full operational leadership and synchronized commercialization strategy.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+<script>
+(function(){
+  var c=document.getElementById('pathAnim');if(!c)return;
+  var ctx=c.getContext('2d');
+  var col=[58,124,165];
+  function rgba(a){return'rgba('+col[0]+','+col[1]+','+col[2]+','+a+')';}
+  var nodes=3,time=0,W,H;
+  function resize(){W=c.offsetWidth*2;H=c.offsetHeight*2;c.width=W;c.height=H;}
+  resize();window.addEventListener('resize',resize);
+  function frame(){
+    ctx.clearRect(0,0,W,H);time+=0.016;
+    var cx=W/2,padY=H*0.02;
+    var lineTop=padY,lineBot=H-padY;
+    ctx.beginPath();ctx.moveTo(cx,lineTop);ctx.lineTo(cx,lineBot);
+    ctx.strokeStyle=rgba(0.35);ctx.lineWidth=3;ctx.stroke();
+    var nodePositions=[];
+    for(var i=0;i<nodes;i++){nodePositions.push(lineTop+(lineBot-lineTop)*((i+0.5)/nodes));}
+    var pCycle=10;
+    var pT=((time%pCycle)/pCycle);
+    var py=lineTop+(lineBot-lineTop)*pT;
+    for(var i=0;i<nodes;i++){
+      var ny=nodePositions[i];
+      var dist=Math.abs(py-ny);
+      var maxDist=H*0.1;
+      var proximity=Math.max(0,1-dist/maxDist);
+      var baseOp=0.45+proximity*0.4;
+      ctx.beginPath();ctx.arc(cx,ny,18,0,Math.PI*2);
+      ctx.strokeStyle=rgba(baseOp);ctx.lineWidth=3.5;ctx.stroke();
+      ctx.beginPath();ctx.arc(cx,ny,7,0,Math.PI*2);
+      ctx.fillStyle=rgba(baseOp+0.2);ctx.fill();
+      if(proximity>0.2){
+        var pr=18+proximity*24;
+        ctx.beginPath();ctx.arc(cx,ny,pr,0,Math.PI*2);
+        ctx.strokeStyle=rgba(proximity*0.35);ctx.lineWidth=2.5;ctx.stroke();
+        var ng=ctx.createRadialGradient(cx,ny,0,cx,ny,pr+10);
+        ng.addColorStop(0,rgba(proximity*0.2));ng.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.beginPath();ctx.arc(cx,ny,pr+10,0,Math.PI*2);ctx.fillStyle=ng;ctx.fill();
+      }
+    }
+    ctx.beginPath();ctx.arc(cx,py,7,0,Math.PI*2);
+    ctx.fillStyle=rgba(0.9);ctx.fill();
+    var pg=ctx.createRadialGradient(cx,py,0,cx,py,24);
+    pg.addColorStop(0,rgba(0.5));pg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();ctx.arc(cx,py,24,0,Math.PI*2);ctx.fillStyle=pg;ctx.fill();
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<div class="divider"></div>
+
+<!-- ══ SECTION C - YOUR OUTCOMES ══ -->
+<section class="section section--alt" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px);background:rgba(15,19,30,.48)">
+<div class="container">
+
+  <div class="reveal" style="text-align:center;max-width:720px;margin:0 auto clamp(48px,6vw,80px)">
+    <p class="eyebrow" style="color:#3A7CA5;font-size:14px;max-width:none;margin:0 auto 16px">What You Gain</p>
+    <h2>What the partnership <span style="color:#3A7CA5">produces.</span></h2>
+  </div>
+
+  <!-- 4 dimension cards -->
+  <div class="dimensions reveal">
+    <div class="dimension reveal-d1">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/><path d="M14 20 L18 24 L26 16" stroke="#3A7CA5" stroke-width="1.5" opacity=".6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h4 class="dimension__title">Higher Funding Conversion</h4>
+      <p class="dimension__text">Ventures enter investor conversations with clearer narratives, stronger evidence alignment, and realistic commercialization pathways.</p>
+    </div>
+    <div class="dimension reveal-d2">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="24" r="4" fill="#3A7CA5" opacity=".6"/><path d="M14 18 Q20 12 26 18" stroke="#3A7CA5" stroke-width="1.5" opacity=".35" fill="none" stroke-linecap="round"/><path d="M10 13 Q20 5 30 13" stroke="#3A7CA5" stroke-width="1.5" opacity=".25" fill="none" stroke-linecap="round"/><line x1="20" y1="28" x2="20" y2="34" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/></svg>
+      </div>
+      <h4 class="dimension__title">Portfolio Signal</h4>
+      <p class="dimension__text">Clear visibility into which ventures hold the highest structural potential and deserve focused investment of program resources.</p>
+    </div>
+    <div class="dimension reveal-d3">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><circle cx="18" cy="18" r="10" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/><line x1="25" y1="25" x2="32" y2="32" stroke="#3A7CA5" stroke-width="2" opacity=".5" stroke-linecap="round"/><circle cx="18" cy="18" r="4" stroke="#3A7CA5" stroke-width="1" opacity=".3"/><circle cx="18" cy="18" r="1.5" fill="#3A7CA5" opacity=".7"/></svg>
+      </div>
+      <h4 class="dimension__title">Founder Clarity</h4>
+      <p class="dimension__text">Startups make better strategic decisions earlier, reducing costly pivots and accelerating credible progress toward funding.</p>
+    </div>
+    <div class="dimension reveal-d4">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="24" height="24" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/><line x1="14" y1="20" x2="26" y2="20" stroke="#3A7CA5" stroke-width="1.5" opacity=".5"/><circle cx="20" cy="20" r="3" fill="#3A7CA5" opacity=".5"/></svg>
+      </div>
+      <h4 class="dimension__title">Stronger Investor Confidence</h4>
+      <p class="dimension__text">Partnership with Siaxen signals rigor, selectivity, and commercial seriousness to investors evaluating your portfolio.</p>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SECTION D - CTA FORM ══ -->
+<section class="section" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px)">
+<div class="container">
+  <div class="form-wrap reveal">
+    <p class="eyebrow" style="color:#3A7CA5;font-size:14px;text-align:center">Start the Conversation</p>
+    <h2 style="font-size:clamp(28px,4vw,44px);text-align:center;margin-bottom:clamp(32px,4vw,48px)">Explore a <span style="color:#3A7CA5">portfolio partnership.</span></h2>
+    <form action="#" method="POST">
+      <input type="text" name="name" placeholder="Full Name" required class="form-field">
+      <input type="email" name="email" placeholder="Email Address" required class="form-field">
+      <input type="text" name="organization" placeholder="Program / Organization" class="form-field">
+      <input type="text" name="role" placeholder="Your Role" class="form-field">
+      <textarea name="message" placeholder="How you'd like to collaborate." rows="4" class="form-field form-textarea"></textarea>
+      <button type="submit" class="btn btn-primary form-submit">Submit</button>
+    </form>
+  </div>
+</div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer" role="contentinfo">
+<div class="container">
+  <div class="footer__top">
+    <div class="footer__brand">
+      <img src="assets/Siaxen Full.svg" alt="Siaxen" style="height:38px;filter:brightness(0) invert(1)">
+      <p style="margin-top:24px">Siaxen is a MedTech venture studio that builds investor-ready companies from patented science.</p>
+      <p style="font-size:13px;color:var(--tx);margin-top:32px">Brussels, Belgium</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <div class="footer__col-title">COMPANY</div>
+        <div class="footer__links">
+          <a href="about.html">About</a>
+          <a href="dna.html">DNA</a>
+          <a href="triage.html">TRIAGE&#8482;</a>
+          <a href="insights.html">Insights</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">FOR YOU</div>
+        <div class="footer__links">
+          <a href="inventors.html">Inventors</a>
+          <a href="investors.html">Investors</a>
+          <a href="incubators.html">Incubators</a>
+          <a href="partners.html">Partners</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">CONNECT</div>
+        <div class="footer__links">
+          <a href="https://linkedin.com/company/siaxen" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/siaxen" target="_blank" rel="noopener">X</a>
+          <a href="https://instagram.com/siaxen" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:contact@siaxen.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>&copy; 2026 Siaxen. All rights reserved.</span>
+    <div class="footer__legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+    </div>
+  </div>
+</div>
+</footer>
+
+<script src="js/main.js" defer></script>
+<script>document.addEventListener('DOMContentLoaded', function(){ if(window.initHeroGrid) window.initHeroGrid(); });</script>
+<style>@media(max-width:1024px){.section [style*="grid-template-columns"]{grid-template-columns:1fr!important}.section [style*="grid-template-columns"]>[aria-hidden]{order:2}.process-grid{grid-template-columns:36px 1fr!important}.process-grid>[aria-hidden]{order:0}}</style>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About - Siaxen</title>
+<meta name="description" content="Siaxen is a MedTech venture studio based in Brussels. We build investor-ready companies from patented science by replacing fragmented commercialization with synchronized architecture.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://siaxen.com/about">
+<meta property="og:title" content="About - Siaxen">
+<meta property="og:description" content="Siaxen is a MedTech venture studio based in Brussels. We build investor-ready companies from patented science.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://siaxen.com/about">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+
+<!-- -- HEADER -- -->
+<header class="site-header" role="banner">
+<div class="site-header__inner">
+  <a href="index.html" class="logo" aria-label="Siaxen Home">
+    <img src="assets/Siaxen wordmark.svg" alt="Siaxen" width="110" height="24">
+  </a>
+  <nav class="nav-desktop" role="navigation" aria-label="Main navigation">
+    <a href="about.html" class="nav__link nav__link--active">About</a>
+    <a href="inventors.html" class="nav__link">Inventors</a>
+    <a href="investors.html" class="nav__link">Investors</a>
+    <a href="incubators.html" class="nav__link">Incubators</a>
+    <a href="partners.html" class="nav__link">Partners</a>
+    <a href="dna.html" class="nav__link">DNA</a>
+    <a href="triage.html" class="nav__link">TRIAGE&#8482;</a>
+    <a href="insights.html" class="nav__link">Insights</a>
+  </nav>
+  <div class="header-cta">
+    <a href="contact.html" class="header-cta__primary">Contact us</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+</header>
+
+<!-- -- MOBILE NAV -- -->
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <div class="mobile-nav__links">
+    <a href="about.html" class="mobile-nav__link">About</a>
+    <a href="inventors.html" class="mobile-nav__link">Inventors</a>
+    <a href="investors.html" class="mobile-nav__link">Investors</a>
+    <a href="incubators.html" class="mobile-nav__link">Incubators</a>
+    <a href="partners.html" class="mobile-nav__link">Partners</a>
+    <a href="dna.html" class="mobile-nav__link">DNA</a>
+    <a href="triage.html" class="mobile-nav__link">TRIAGE&#8482;</a>
+    <a href="insights.html" class="mobile-nav__link">Insights</a>
+  </div>
+  <div class="mobile-nav__bottom">
+    <a href="contact.html" class="mobile-nav__cta">Contact us</a>
+  </div>
+</div>
+
+<!-- -- 1. PAGE HERO (Keep existing animation) -- -->
+<section class="page-hero">
+<canvas id="heroGridAnim" style="position:absolute;inset:0;width:100%;height:100%;z-index:0" aria-hidden="true"></canvas>
+
+<div class="page-hero__inner">
+  <div class="page-hero__text">
+    <p class="eyebrow">About Us</p>
+    <h1>
+      <span>We build MedTech ventures</span><br>
+      <span class="accent">the way they should be built.</span>
+    </h1>
+    <p class="page-hero__desc">Siaxen co-founds MedTech companies from patented science and takes full operational responsibility for their path to market. Strategy, capital, and execution designed together and led together.</p>
+  </div>
+  <div class="page-hero__visual" aria-hidden="true">
+    <canvas id="archCanvas" style="width:100%;max-width:762px;aspect-ratio:1" width="1400" height="1400"></canvas>
+  </div>
+</div>
+
+<!-- Architecture animation (unique to About page) -->
+<script>
+(function(){
+  var canvas=document.getElementById('archCanvas');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var W=1400,H=1400;
+  canvas.width=W;canvas.height=H;
+  var cx=W/2,cy=H/2;
+  var col=[58,124,165];
+  var time=0;
+
+  function rgba(a){return 'rgba('+col[0]+','+col[1]+','+col[2]+','+a+')';}
+  function easeIO(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+  function lerp(a,b,t){return a+(b-a)*t;}
+
+  var rects=[
+    {tx:cx-504,ty:cy-504,tw:1008,th:1008,topac:0.25,sw:11},
+    {tx:cx-350,ty:cy-350,tw:700,th:700,topac:0.38,sw:10},
+    {tx:cx-217,ty:cy-217,tw:434,th:434,topac:0.50,sw:10},
+    {tx:cx-101,ty:cy-101,tw:202,th:202,topac:0.60,sw:9}
+  ];
+
+  function scatter(){
+    for(var i=0;i<rects.length;i++){
+      var r=rects[i];
+      r.sx=cx+(Math.random()-0.5)*W*0.55-r.tw/2;
+      r.sy=cy+(Math.random()-0.5)*H*0.55-r.th/2;
+      r.sw_s=r.tw*(0.5+Math.random()*0.6);
+      r.sh_s=r.th*(0.5+Math.random()*0.6);
+      r.srot=(Math.random()-0.5)*0.5;
+    }
+  }
+  scatter();
+
+  for(var i=0;i<rects.length;i++){
+    var r=rects[i];
+    r.x=r.sx;r.y=r.sy;r.w=r.sw_s;r.h=r.sh_s;r.rot=r.srot;
+  }
+
+  var CYCLE=14;
+  var scattered=false;
+
+  function frame(){
+    time+=0.016;
+    ctx.clearRect(0,0,W,H);
+
+    var g=ctx.createRadialGradient(cx,cy,0,cx,cy,560);
+    g.addColorStop(0,rgba(0.16));g.addColorStop(0.5,rgba(0.05));g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();ctx.arc(cx,cy,560,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+
+    var cycleT=time%CYCLE;
+    var progress;
+    if(cycleT<4){progress=easeIO(cycleT/4);}
+    else if(cycleT<9){progress=1;}
+    else if(cycleT<12){progress=1-easeIO((cycleT-9)/3);}
+    else{progress=0;if(!scattered){scatter();scattered=true;}}
+    if(cycleT<9)scattered=false;
+
+    for(var i=0;i<rects.length;i++){
+      var r=rects[i];
+      var goalX=lerp(r.sx,r.tx,progress);
+      var goalY=lerp(r.sy,r.ty,progress);
+      var goalW=lerp(r.sw_s,r.tw,progress);
+      var goalH=lerp(r.sh_s,r.th,progress);
+      var goalR=lerp(r.srot,0,progress);
+
+      r.x+=(goalX-r.x)*0.04;
+      r.y+=(goalY-r.y)*0.04;
+      r.w+=(goalW-r.w)*0.04;
+      r.h+=(goalH-r.h)*0.04;
+      r.rot+=(goalR-r.rot)*0.04;
+
+      var op=lerp(r.topac*0.2,r.topac,progress);
+
+      ctx.save();
+      ctx.translate(r.x+r.w/2,r.y+r.h/2);
+      ctx.rotate(r.rot);
+      ctx.shadowColor=rgba(op*0.6);
+      ctx.shadowBlur=20;
+      ctx.strokeStyle=rgba(op);
+      ctx.lineWidth=r.sw;
+      ctx.strokeRect(-r.w/2,-r.h/2,r.w,r.h);
+      ctx.restore();
+    }
+
+    ctx.shadowColor='transparent';ctx.shadowBlur=0;
+    var cp=0.75+0.2*Math.sin(time*1.0);
+    ctx.beginPath();ctx.arc(cx,cy,20,0,Math.PI*2);ctx.fillStyle=rgba(cp);ctx.fill();
+    var pT=(time*0.15)%1;
+    var pR=20+pT*140;
+    var pA=0.14*(1-pT);
+    ctx.beginPath();ctx.arc(cx,cy,pR,0,Math.PI*2);ctx.strokeStyle=rgba(pA);ctx.lineWidth=3.5;ctx.stroke();
+
+    requestAnimationFrame(frame);
+  }
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){time=0;frame();}else{requestAnimationFrame(frame);}
+})();
+</script>
+</section>
+
+<div class="divider"></div>
+
+<!-- -- 2. WHY WE EXIST -- -->
+<section class="section section--alt" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px);background:rgba(15,19,30,.48)">
+<div class="container">
+
+  <!-- Two-column: Text left + Stats right -->
+  <div class="reveal" style="display:grid;grid-template-columns:1.3fr .7fr;gap:clamp(40px,5vw,72px);align-items:center">
+    
+    <!-- Text left -->
+    <div style="margin:0">
+      <p class="eyebrow" style="color:#3A7CA5;font-size:14px">Why We Exist</p>
+      <h2>Thousands of medical technologies.<br><span style="color:#3A7CA5">A fraction reach patients.</span></h2>
+      <p style="font-size:clamp(14px,1.4vw,16px);color:var(--tx-sub);line-height:1.9;margin-top:20px;max-width:560px">Each year, Western European produce thousands of patented medical technologies, most of which never reach the market. The science is not the problem. What fails is the commercialization architecture around it: fragmented advisory, disconnected regulatory and capital strategies, each designed in isolation.</p>
+      <p style="font-size:clamp(14px,1.4vw,16px);color:var(--tx-sub);line-height:1.9;margin-top:14px;max-width:560px">Siaxen exists to close that gap. We provide the integrated commercialization system and co-founder accountability that turns validated science into funded, scalable companies.</p>
+    </div>
+
+    <!-- Stats right -->
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <div class="stat-card reveal reveal-d1" style="background:var(--surf);padding:clamp(20px,2.5vw,28px);position:relative;overflow:hidden">
+        <p style="font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,40px);color:#3A7CA5;line-height:1;margin-bottom:6px" data-counter="80" data-suffix="%">0%</p>
+        <p style="font-size:11px;color:var(--tx-mute);line-height:1.5">of MedTech patents never reach the market</p>
+      </div>
+      <div class="stat-card reveal reveal-d2" style="background:var(--surf);padding:clamp(20px,2.5vw,28px);position:relative;overflow:hidden">
+        <p style="font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,40px);color:#3A7CA5;line-height:1;margin-bottom:6px" data-counter="15700" data-suffix="+">0+</p>
+        <p style="font-size:11px;color:var(--tx-mute);line-height:1.5">MedTech patents filed with the EPO in 2024</p>
+      </div>
+      <div class="stat-card reveal reveal-d3" style="background:var(--surf);padding:clamp(20px,2.5vw,28px);position:relative;overflow:hidden">
+        <p style="font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,40px);color:#3A7CA5;line-height:1;margin-bottom:6px" data-counter="7" data-prefix="3–" data-suffix=" yrs">0 yrs</p>
+        <p style="font-size:11px;color:var(--tx-mute);line-height:1.5">average commercialization timeline</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- -- 3. WHERE WE OPERATE -- -->
+<section class="section" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px)">
+<div class="container">
+
+  <!-- Two-column: Visual left + Text right -->
+  <div class="reveal where-grid" style="display:grid;grid-template-columns:.7fr 1.3fr;gap:clamp(32px,4vw,56px);align-items:center">
+    
+    <!-- Visual left -->
+    <div class="where-visual" style="display:flex;align-items:center;justify-content:center" aria-hidden="true">
+      <svg viewBox="0 0 260 200" fill="none" style="width:100%;max-width:455px">
+        <!-- Scattered dots representing European cities -->
+        <circle cx="90" cy="60" r="3.5" fill="#3A7CA5" opacity=".35"/>
+        <circle cx="140" cy="45" r="3.5" fill="#3A7CA5" opacity=".35"/>
+        <circle cx="170" cy="70" r="3.5" fill="#3A7CA5" opacity=".35"/>
+        <circle cx="80" cy="120" r="3.5" fill="#3A7CA5" opacity=".35"/>
+        <circle cx="200" cy="90" r="3.5" fill="#3A7CA5" opacity=".35"/>
+        <circle cx="60" cy="85" r="3.5" fill="#3A7CA5" opacity=".35"/>
+        <circle cx="190" cy="130" r="3.5" fill="#3A7CA5" opacity=".35"/>
+        <circle cx="120" cy="160" r="3.5" fill="#3A7CA5" opacity=".35"/>
+        <!-- Brussels - highlighted -->
+        <circle cx="130" cy="80" r="10" stroke="#3A7CA5" stroke-width="1.5" opacity=".45" fill="none"/>
+        <circle cx="130" cy="80" r="5" fill="#3A7CA5" opacity=".9"/>
+        <!-- Connection lines from Brussels -->
+        <line x1="130" y1="80" x2="90" y2="60" stroke="#3A7CA5" stroke-width="1" opacity=".25" stroke-dasharray="3 3"/>
+        <line x1="130" y1="80" x2="140" y2="45" stroke="#3A7CA5" stroke-width="1" opacity=".25" stroke-dasharray="3 3"/>
+        <line x1="130" y1="80" x2="170" y2="70" stroke="#3A7CA5" stroke-width="1" opacity=".25" stroke-dasharray="3 3"/>
+        <line x1="130" y1="80" x2="80" y2="120" stroke="#3A7CA5" stroke-width="1" opacity=".25" stroke-dasharray="3 3"/>
+        <line x1="130" y1="80" x2="200" y2="90" stroke="#3A7CA5" stroke-width="1" opacity=".25" stroke-dasharray="3 3"/>
+        <line x1="130" y1="80" x2="60" y2="85" stroke="#3A7CA5" stroke-width="1" opacity=".25" stroke-dasharray="3 3"/>
+        <line x1="130" y1="80" x2="190" y2="130" stroke="#3A7CA5" stroke-width="1" opacity=".25" stroke-dasharray="3 3"/>
+        <line x1="130" y1="80" x2="120" y2="160" stroke="#3A7CA5" stroke-width="1" opacity=".25" stroke-dasharray="3 3"/>
+        <!-- Pulse ring animation -->
+        <circle cx="130" cy="80" r="24" stroke="#3A7CA5" stroke-width="1" opacity=".2" fill="none">
+          <animate attributeName="r" from="18" to="35" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" from=".3" to="0" dur="3s" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </div>
+
+    <!-- Text right -->
+    <div>
+      <p class="eyebrow" style="color:#3A7CA5;font-size:14px">Where We Operate</p>
+      <h2>At the center of the European<br><span style="color:#3A7CA5">life sciences corridor.</span></h2>
+      <p style="font-size:clamp(14px,1.4vw,16px);color:var(--tx-sub);line-height:1.9;margin-top:20px;max-width:560px">Siaxen operates from Brussels, Belgium, adjacent to the EU regulatory institutions that shape medical device policy across the continent. The location places us within direct reach of the densest concentration of university technology transfer offices in Western Europe, and at the intersection where regulatory decisions, clinical standards, and reimbursement frameworks converge.</p>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- -- 4. THE NAME -- -->
+<section class="section section--alt" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px);background:rgba(15,19,30,.48)">
+<div class="container">
+
+  <div class="section__header reveal" style="text-align:center;margin-bottom:clamp(32px,4vw,48px)">
+    <p class="eyebrow" style="color:#3A7CA5;font-size:14px;text-align:center;max-width:none;margin-left:auto;margin-right:auto">Our Name</p>
+    <h2 style="text-align:center">First, we see. <span style="color:#3A7CA5">Then, we build.</span></h2>
+  </div>
+
+  <div class="reveal" style="display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(24px,4vw,56px);align-items:center;max-width:860px;margin:0 auto">
+    <!-- Sia -->
+    <div style="text-align:center">
+      <div style="margin-bottom:clamp(16px,2vw,24px)" aria-hidden="true">
+        <svg viewBox="0 0 90 90" fill="none" style="width:80px;height:80px;margin:0 auto">
+          <ellipse cx="45" cy="45" rx="32" ry="18" stroke="#3A7CA5" stroke-width="2.5" opacity=".35" fill="none"/>
+          <circle cx="45" cy="45" r="12" stroke="#3A7CA5" stroke-width="2.5" opacity=".5" fill="none"/>
+          <circle cx="45" cy="45" r="4.5" fill="#3A7CA5" opacity=".65"/>
+        </svg>
+      </div>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:clamp(32px,4vw,48px);color:#3A7CA5;margin-bottom:14px;letter-spacing:1px">Sia</h3>
+      <p style="font-size:clamp(13px,1.2vw,15px);color:var(--tx-sub);line-height:1.9;max-width:270px;margin:0 auto">From the ancient Egyptian deification of perception and deep understanding. The ability to see the world's true potential beyond its current state.</p>
+    </div>
+
+    <!-- Divider -->
+    <div style="width:2px;align-self:stretch;background:linear-gradient(180deg,transparent 10%,rgba(58,124,165,.5) 50%,transparent 90%)" aria-hidden="true"></div>
+
+    <!-- Xen -->
+    <div style="text-align:center">
+      <div style="margin-bottom:clamp(16px,2vw,24px)" aria-hidden="true">
+        <svg viewBox="0 0 90 90" fill="none" style="width:80px;height:80px;margin:0 auto">
+          <line x1="45" y1="8" x2="45" y2="82" stroke="#3A7CA5" stroke-width="1.5" opacity=".3"/>
+          <line x1="8" y1="45" x2="82" y2="45" stroke="#3A7CA5" stroke-width="1.5" opacity=".3"/>
+          <line x1="18" y1="18" x2="72" y2="72" stroke="#3A7CA5" stroke-width="1" opacity=".18"/>
+          <line x1="72" y1="18" x2="18" y2="72" stroke="#3A7CA5" stroke-width="1" opacity=".18"/>
+          <circle cx="45" cy="45" r="16" stroke="#3A7CA5" stroke-width="2.5" opacity=".4" fill="none"/>
+          <circle cx="45" cy="45" r="4.5" fill="#3A7CA5" opacity=".65"/>
+        </svg>
+      </div>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:clamp(32px,4vw,48px);color:#3A7CA5;margin-bottom:14px;letter-spacing:1px">Xen</h3>
+      <p style="font-size:clamp(13px,1.2vw,15px);color:var(--tx-sub);line-height:1.9;max-width:270px;margin:0 auto">From the Greek root <em>xénos</em> (ξένος), meaning foreign or new. Representing the creation of something novel and transformative.</p>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<div class="divider"></div>
+
+<style>
+/* Stat card animations */
+.stat-card{
+  border-left:2px solid rgba(58,124,165,.35);
+  transition:border-left-color .4s ease,transform .3s ease;
+}
+.stat-card:hover{
+  transform:translateY(-3px);
+  border-left-color:#3A7CA5;
+}
+/* Glow sweep effect */
+.stat-card::after{
+  content:'';
+  position:absolute;
+  top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(58,124,165,.04),transparent);
+  transition:none;
+}
+.stat-card.is-visible::after{
+  animation:glowSweep 1.5s ease .5s forwards;
+}
+@keyframes glowSweep{
+  0%{left:-100%}
+  100%{left:100%}
+}
+@media(max-width:1024px){
+  .section [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+  .where-visual{order:2!important}
+  .where-visual svg{max-width:500px!important}
+}
+@media(max-width:768px){
+  .section [style*="grid-template-columns:1fr auto 1fr"]{grid-template-columns:1fr!important}
+  .section [style*="grid-template-columns:1fr auto 1fr"] [style*="width:2px"][style*="align-self"]{
+    width:100px!important;
+    height:2px!important;
+    align-self:auto!important;
+    margin:20px auto;
+    background:linear-gradient(90deg,transparent,rgba(58,124,165,.45),transparent)!important;
+  }
+}
+</style>
+
+<!-- -- 5. PRE-FOOTER CTA -- -->
+<section class="section cta-section">
+<div class="container">
+  <div class="reveal" style="text-align:center">
+    <p class="eyebrow" style="color:#3A7CA5;margin-bottom:20px">Next Step</p>
+    <h2 style="font-size:clamp(32px,5vw,56px)">Let's build <span class="text-accent">what matters.</span></h2>
+    <div style="margin-top:clamp(32px,4vw,48px)">
+      <a href="contact.html" class="btn btn-primary" style="padding:16px 40px;font-size:15px">Schedule a conversation</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- -- FOOTER -- -->
+<footer class="site-footer" role="contentinfo">
+<div class="container">
+  <div class="footer__top">
+    <div class="footer__brand">
+      <img src="assets/Siaxen Full.svg" alt="Siaxen" style="height:38px;filter:brightness(0) invert(1)">
+      <p style="margin-top:24px">Siaxen is a MedTech venture studio that builds investor-ready companies from patented science.</p>
+      <p style="font-size:13px;color:var(--tx);margin-top:32px">Brussels, Belgium</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <div class="footer__col-title">COMPANY</div>
+        <div class="footer__links">
+          <a href="about.html">About</a>
+          <a href="dna.html">DNA</a>
+          <a href="triage.html">TRIAGE&#8482;</a>
+          <a href="insights.html">Insights</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">FOR YOU</div>
+        <div class="footer__links">
+          <a href="inventors.html">Inventors</a>
+          <a href="investors.html">Investors</a>
+          <a href="incubators.html">Incubators</a>
+          <a href="partners.html">Partners</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">CONNECT</div>
+        <div class="footer__links">
+          <a href="https://linkedin.com/company/siaxen" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/siaxen" target="_blank" rel="noopener">X</a>
+          <a href="https://instagram.com/siaxen" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:contact@siaxen.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>&copy; 2026 Siaxen. All rights reserved.</span>
+    <div class="footer__legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+    </div>
+  </div>
+</div>
+</footer>
+
+<script src="js/main.js" defer></script>
+<script>document.addEventListener('DOMContentLoaded', function(){ if(window.initHeroGrid) window.initHeroGrid(); });</script>
+</body>
+</html>

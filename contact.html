@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - Siaxen</title>
+<meta name="description" content="Start a conversation with Siaxen. MedTech venture studio based in Brussels.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://siaxen.com/contact">
+<meta property="og:title" content="Contact - Siaxen">
+<meta property="og:description" content="Start a conversation with Siaxen. MedTech venture studio based in Brussels.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://siaxen.com/contact">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header" role="banner">
+<div class="site-header__inner">
+  <a href="index.html" class="logo" aria-label="Siaxen Home">
+    <img src="assets/Siaxen wordmark.svg" alt="Siaxen" width="110" height="24">
+  </a>
+  <nav class="nav-desktop" role="navigation" aria-label="Main navigation">
+    <a href="about.html" class="nav__link">About</a>
+    <a href="inventors.html" class="nav__link">Inventors</a>
+    <a href="investors.html" class="nav__link">Investors</a>
+    <a href="incubators.html" class="nav__link">Incubators</a>
+    <a href="partners.html" class="nav__link">Partners</a>
+    <a href="dna.html" class="nav__link">DNA</a>
+    <a href="triage.html" class="nav__link">TRIAGE&#8482;</a>
+    <a href="insights.html" class="nav__link">Insights</a>
+  </nav>
+  <div class="header-cta">
+    <a href="contact.html" class="header-cta__primary">Contact us</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+</header>
+
+<!-- ══ MOBILE NAV ══ -->
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <div class="mobile-nav__links">
+    <a href="about.html" class="mobile-nav__link">About</a>
+    <a href="inventors.html" class="mobile-nav__link">Inventors</a>
+    <a href="investors.html" class="mobile-nav__link">Investors</a>
+    <a href="incubators.html" class="mobile-nav__link">Incubators</a>
+    <a href="partners.html" class="mobile-nav__link">Partners</a>
+    <a href="dna.html" class="mobile-nav__link">DNA</a>
+    <a href="triage.html" class="mobile-nav__link">TRIAGE&#8482;</a>
+    <a href="insights.html" class="mobile-nav__link">Insights</a>
+  </div>
+  <div class="mobile-nav__bottom">
+    <a href="contact.html" class="mobile-nav__cta">Contact us</a>
+  </div>
+</div>
+
+<!-- ══ PAGE HERO (Form as visual) ══ -->
+<section class="page-hero" style="position:relative;overflow:hidden;background:#070912">
+
+<!-- Animated hero grid -->
+<canvas id="heroGridAnim" style="position:absolute;inset:0;width:100%;height:100%;z-index:0" aria-hidden="true"></canvas>
+
+<div class="page-hero__inner" style="position:relative;z-index:2">
+  <div class="page-hero__text">
+    <p class="eyebrow" style="color:#3A7CA5;font-size:14px">Get In Touch</p>
+    <h1 style="font-family:'DM Serif Display',serif;font-weight:400;font-size:clamp(32px,4.5vw,56px);line-height:1.1;margin-bottom:clamp(28px,3.5vw,40px)">
+      <span>Let's discuss</span><br>
+      <span style="color:#3A7CA5">what's possible.</span>
+    </h1>
+    
+    <!-- Contact info -->
+    <div class="contact-info" style="display:flex;flex-direction:column;gap:22px">
+      <div>
+        <p style="font-size:12px;font-weight:600;letter-spacing:1.5px;color:#3A7CA5;margin-bottom:5px">EMAIL</p>
+        <a href="mailto:contact@siaxen.com" style="font-size:16px;color:var(--tx-sub);transition:color .3s" onmouseover="this.style.color='#3A7CA5'" onmouseout="this.style.color=''">contact@siaxen.com</a>
+      </div>
+      <div>
+        <p style="font-size:12px;font-weight:600;letter-spacing:1.5px;color:#3A7CA5;margin-bottom:5px">LOCATION</p>
+        <p style="font-size:16px;color:var(--tx-sub)">Brussels, Belgium</p>
+      </div>
+      <div>
+        <p style="font-size:12px;font-weight:600;letter-spacing:1.5px;color:#3A7CA5;margin-bottom:5px">LINKEDIN</p>
+        <a href="https://linkedin.com/company/siaxen" target="_blank" rel="noopener" style="font-size:16px;color:var(--tx-sub);transition:color .3s" onmouseover="this.style.color='#3A7CA5'" onmouseout="this.style.color=''">linkedin.com/company/siaxen</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <div class="page-hero__visual" style="align-items:start;min-height:auto">
+    <div style="width:100%">
+      <form action="#" method="POST" style="display:flex;flex-direction:column;gap:16px">
+        <div>
+          <label style="font-size:11px;font-weight:600;letter-spacing:1px;color:var(--tx-sub);display:block;margin-bottom:6px">FULL NAME</label>
+          <input type="text" name="name" placeholder="Your full name" required style="background:var(--surf);border:1px solid rgba(58,124,165,.2);padding:13px 16px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:14px;outline:none;width:100%;transition:border-color .3s" onfocus="this.style.borderColor='rgba(58,124,165,.4)'" onblur="this.style.borderColor='rgba(58,124,165,.1)'">
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;letter-spacing:1px;color:var(--tx-sub);display:block;margin-bottom:6px">EMAIL</label>
+          <input type="email" name="email" placeholder="you@organization.com" required style="background:var(--surf);border:1px solid rgba(58,124,165,.2);padding:13px 16px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:14px;outline:none;width:100%;transition:border-color .3s" onfocus="this.style.borderColor='rgba(58,124,165,.4)'" onblur="this.style.borderColor='rgba(58,124,165,.1)'">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+          <div>
+            <label style="font-size:11px;font-weight:600;letter-spacing:1px;color:var(--tx-sub);display:block;margin-bottom:6px">ORGANIZATION</label>
+            <input type="text" name="organization" placeholder="Company or institution" style="background:var(--surf);border:1px solid rgba(58,124,165,.2);padding:13px 16px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:14px;outline:none;width:100%;transition:border-color .3s" onfocus="this.style.borderColor='rgba(58,124,165,.4)'" onblur="this.style.borderColor='rgba(58,124,165,.1)'">
+          </div>
+          <div>
+            <label style="font-size:11px;font-weight:600;letter-spacing:1px;color:var(--tx-sub);display:block;margin-bottom:6px">YOUR ROLE</label>
+            <input type="text" name="role" placeholder="e.g. Inventor, Investor, Partner" style="background:var(--surf);border:1px solid rgba(58,124,165,.2);padding:13px 16px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:14px;outline:none;width:100%;transition:border-color .3s" onfocus="this.style.borderColor='rgba(58,124,165,.4)'" onblur="this.style.borderColor='rgba(58,124,165,.1)'">
+          </div>
+        </div>
+        <div>
+          <label style="font-size:11px;font-weight:600;letter-spacing:1px;color:var(--tx-sub);display:block;margin-bottom:6px">MESSAGE</label>
+          <textarea name="message" rows="4" placeholder="Tell us about your technology, investment interest, or how you'd like to collaborate." style="background:var(--surf);border:1px solid rgba(58,124,165,.2);padding:13px 16px;color:var(--tx);font-family:'Outfit',sans-serif;font-size:14px;outline:none;width:100%;resize:vertical;min-height:110px;transition:border-color .3s" onfocus="this.style.borderColor='rgba(58,124,165,.4)'" onblur="this.style.borderColor='rgba(58,124,165,.1)'"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:4px;width:100%;justify-content:center;padding:14px 32px">Send Message</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+.page-hero{
+  padding:calc(var(--header-h) + clamp(48px,6vw,80px)) 0 clamp(48px,6vw,80px);
+}
+.page-hero__inner{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:clamp(32px,4vw,64px);
+  max-width:1280px;
+  margin:0 auto;
+  padding:0 var(--gutter);
+}
+.page-hero__text{max-width:none}
+.page-hero__visual{display:flex;align-items:center;justify-content:flex-end}
+@media(max-width:1024px){
+  .page-hero__inner{grid-template-columns:1fr;text-align:center;gap:clamp(28px,3.5vh,40px)}
+  .page-hero__text{order:1}
+  .page-hero__visual{order:2;justify-content:center}
+  .page-hero__visual form label{text-align:left!important}
+  .contact-info{flex-direction:row!important;justify-content:center;gap:32px!important;padding-bottom:clamp(20px,3vw,32px)}
+}
+@media(max-width:480px){
+  .contact-info{flex-direction:column!important;align-items:center}
+}
+@media(max-width:600px){
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
+}
+</style>
+<script>
+(function(){
+  var c=document.getElementById('heroGridAnim');if(!c)return;var ctx=c.getContext('2d');var sp=80;var traces=[];var headerH=72;var gridStartY=headerH+sp;
+  function allH(){var a=[];for(var y=gridStartY;y<c.height;y+=sp)a.push(y);return a;}
+  function allV(){var a=[];for(var x=sp;x<c.width;x+=sp)a.push(x);return a;}
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+  function init(){traces=[];var hLines=shuffle(allH());var pickedH=[];for(var i=0;i<hLines.length&&pickedH.length<3;i++){var ok=true;for(var j=0;j<pickedH.length;j++){if(Math.abs(hLines[i]-pickedH[j])<sp*3){ok=false;break;}}if(ok)pickedH.push(hLines[i]);}var vLines=shuffle(allV());var pickedV=[];for(var i=0;i<vLines.length&&pickedV.length<2;i++){var ok=true;for(var j=0;j<pickedV.length;j++){if(Math.abs(vLines[i]-pickedV[j])<sp*3){ok=false;break;}}if(ok)pickedV.push(vLines[i]);}for(var i=0;i<pickedH.length;i++){var goR=Math.random()>0.5;traces.push({type:'h',line:pickedH[i],pos:Math.random()*c.width,dir:goR?1:-1,speed:0.3+Math.random()*0.9,len:120+Math.random()*200,op:0.19+Math.random()*0.09});}for(var i=0;i<pickedV.length;i++){traces.push({type:'v',line:pickedV[i],pos:Math.random()*c.height,dir:-1,speed:0.2+Math.random()*0.7,len:120+Math.random()*200,op:0.19+Math.random()*0.09});}}
+  function newTrace(type){var W=c.width,H=c.height;var pool=type==='h'?allH():allV();shuffle(pool);var picked=-1;var gaps=[sp*3,sp*2,sp];for(var g=0;g<gaps.length&&picked===-1;g++){for(var i=0;i<pool.length;i++){var ok=true;for(var j=0;j<traces.length;j++){if(traces[j]&&traces[j].type===type&&Math.abs(traces[j].line-pool[i])<gaps[g]){ok=false;break;}}if(ok){picked=pool[i];break;}}}if(picked===-1)picked=pool[0];if(type==='h'){var goR=Math.random()>0.5;return{type:'h',line:picked,pos:goR?-(100+Math.random()*300):W+100+Math.random()*300,dir:goR?1:-1,speed:0.3+Math.random()*0.9,len:120+Math.random()*200,op:0.19+Math.random()*0.09};}else{return{type:'v',line:picked,pos:H+100+Math.random()*300,dir:-1,speed:0.2+Math.random()*0.7,len:120+Math.random()*200,op:0.19+Math.random()*0.09};}}
+  function doResize(){c.width=c.parentElement.offsetWidth;c.height=c.parentElement.offsetHeight;var header=document.querySelector('.site-header');if(header)headerH=header.offsetHeight;gridStartY=headerH+sp;traces=[];init();}
+  if(document.readyState==='complete'){doResize();}else{window.addEventListener('load',doResize);}window.addEventListener('resize',doResize);
+  function animate(){ctx.clearRect(0,0,c.width,c.height);var W=c.width,H=c.height;var isMob=W<=768;ctx.lineWidth=isMob?1.2:1;ctx.strokeStyle=isMob?'rgba(58,124,165,0.0675)':'rgba(58,124,165,0.049)';for(var y=gridStartY;y<=H;y+=sp){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}for(var x=0;x<=W;x+=sp){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(var i=0;i<traces.length;i++){var t=traces[i];if(!t)continue;t.pos+=t.speed*t.dir;var head=t.pos,tail=head-t.len*t.dir;if(t.type==='h'){var fadeOp=t.op;if(fadeOp>0.005){var g=ctx.createLinearGradient(tail,t.line,head,t.line);g.addColorStop(0,'rgba(58,124,165,0)');g.addColorStop(0.5,'rgba(58,124,165,'+fadeOp*0.4+')');g.addColorStop(1,'rgba(58,124,165,'+fadeOp+')');ctx.beginPath();ctx.moveTo(tail,t.line);ctx.lineTo(head,t.line);ctx.strokeStyle=g;ctx.lineWidth=1.8;ctx.stroke();}if((t.dir>0&&tail>W)||(t.dir<0&&head<0))traces[i]=newTrace('h');}else{var fadeOp=t.op;if(fadeOp>0.005){var g=ctx.createLinearGradient(t.line,tail,t.line,head);g.addColorStop(0,'rgba(58,124,165,0)');g.addColorStop(0.5,'rgba(58,124,165,'+fadeOp*0.4+')');g.addColorStop(1,'rgba(58,124,165,'+fadeOp+')');ctx.beginPath();ctx.moveTo(t.line,tail);ctx.lineTo(t.line,head);ctx.strokeStyle=g;ctx.lineWidth=1.8;ctx.stroke();}if(head<0&&tail<0)traces[i]=newTrace('v');}}requestAnimationFrame(animate);}animate();
+})();
+</script>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer" role="contentinfo">
+<div class="container">
+  <div class="footer__top">
+    <div class="footer__brand">
+      <img src="assets/Siaxen Full.svg" alt="Siaxen" style="height:38px;filter:brightness(0) invert(1);opacity:1">
+      <p style="margin-top:24px">Siaxen is a MedTech venture studio that builds investor-ready companies from patented science.</p>
+      <p style="font-size:13px;color:var(--tx);margin-top:32px">Brussels, Belgium</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <div class="footer__col-title">COMPANY</div>
+        <div class="footer__links">
+          <a href="about.html">About</a>
+          <a href="dna.html">DNA</a>
+          <a href="triage.html">TRIAGE&#8482;</a>
+          <a href="insights.html">Insights</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">FOR YOU</div>
+        <div class="footer__links">
+          <a href="inventors.html">Inventors</a>
+          <a href="investors.html">Investors</a>
+          <a href="incubators.html">Incubators</a>
+          <a href="partners.html">Partners</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">CONNECT</div>
+        <div class="footer__links">
+          <a href="https://linkedin.com/company/siaxen" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/siaxen" target="_blank" rel="noopener">X</a>
+          <a href="https://instagram.com/siaxen" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:contact@siaxen.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>&copy; 2026 Siaxen. All rights reserved.</span>
+    <div class="footer__legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+    </div>
+  </div>
+</div>
+</footer>
+
+<script src="js/main.js" defer></script>
+<style>::placeholder { color: var(--tx-mute) !important; opacity: .3 !important; }</style>
+</body>
+</html>

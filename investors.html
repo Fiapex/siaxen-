@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Investors - Siaxen</title>
+<meta name="description" content="Structurally de-risked MedTech ventures built through TRIAGE™ - designed for investability from Day One.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://siaxen.com/investors">
+<meta property="og:title" content="For Investors - Siaxen">
+<meta property="og:description" content="Structurally de-risked MedTech ventures built through TRIAGE™ - designed for investability from Day One.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://siaxen.com/investors">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header" role="banner">
+<div class="site-header__inner">
+  <a href="index.html" class="logo" aria-label="Siaxen Home">
+    <img src="assets/Siaxen wordmark.svg" alt="Siaxen" width="110" height="24">
+  </a>
+  <nav class="nav-desktop" role="navigation" aria-label="Main navigation">
+    <a href="about.html" class="nav__link">About</a>
+    <a href="inventors.html" class="nav__link">Inventors</a>
+    <a href="investors.html" class="nav__link nav__link--active">Investors</a>
+    <a href="incubators.html" class="nav__link">Incubators</a>
+    <a href="partners.html" class="nav__link">Partners</a>
+    <a href="dna.html" class="nav__link">DNA</a>
+    <a href="triage.html" class="nav__link">TRIAGE&#8482;</a>
+    <a href="insights.html" class="nav__link">Insights</a>
+  </nav>
+  <div class="header-cta">
+    <a href="contact.html" class="header-cta__primary">Contact us</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+</header>
+
+<!-- ══ MOBILE NAV ══ -->
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <div class="mobile-nav__links">
+    <a href="about.html" class="mobile-nav__link">About</a>
+    <a href="inventors.html" class="mobile-nav__link">Inventors</a>
+    <a href="investors.html" class="mobile-nav__link">Investors</a>
+    <a href="incubators.html" class="mobile-nav__link">Incubators</a>
+    <a href="partners.html" class="mobile-nav__link">Partners</a>
+    <a href="dna.html" class="mobile-nav__link">DNA</a>
+    <a href="triage.html" class="mobile-nav__link">TRIAGE&#8482;</a>
+    <a href="insights.html" class="mobile-nav__link">Insights</a>
+  </div>
+  <div class="mobile-nav__bottom">
+    <a href="contact.html" class="mobile-nav__cta">Contact us</a>
+  </div>
+</div>
+
+<!-- ══ PAGE HERO ══ -->
+<section class="page-hero">
+<canvas id="heroGridAnim" style="position:absolute;inset:0;width:100%;height:100%;z-index:0" aria-hidden="true"></canvas>
+
+<div class="page-hero__inner">
+  <div class="page-hero__text">
+    <p class="eyebrow">For Investors</p>
+    <h1>
+      <span>Ventures built for</span><br>
+      <span class="accent">investability.</span>
+    </h1>
+    <p class="page-hero__desc">TRIAGE&#8482;-validated MedTech ventures. Structured assumptions. Coherent pathways. De-risked before capital is deployed.</p>
+  </div>
+  <div class="page-hero__visual" aria-hidden="true">
+    <canvas id="heroAnim" style="width:100%;max-width:762px;aspect-ratio:1" width="1000" height="1000"></canvas>
+  </div>
+</div>
+
+<script>
+(function(){
+  var canvas=document.getElementById('heroAnim');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var W=1000,H=1000;
+  canvas.width=W;canvas.height=H;
+  var cx=W/2,cy=H/2,time=0;
+  function rgba(a){return 'rgba(58,124,165,'+a+')';}
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function easeIO(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+
+  var CYCLE=18;
+  var orbitR=340;
+  var count=4;
+  var dots=[];
+
+  function initDots(){
+    for(var i=0;i<count;i++){
+      var farAngle=i*(Math.PI*2/count)+Math.random()*0.5;
+      var farDist=440+Math.random()*60;
+      dots[i]={
+        farX:cx+Math.cos(farAngle)*farDist,
+        farY:cy+Math.sin(farAngle)*farDist,
+        targetAngle:i*(Math.PI*2/count)-Math.PI/2,
+        x:dots[i]?dots[i].x:cx+Math.cos(farAngle)*farDist,
+        y:dots[i]?dots[i].y:cy+Math.sin(farAngle)*farDist,
+        driftPhase:Math.random()*Math.PI*2
+      };
+    }
+  }
+  initDots();
+
+  function frame(){
+    time+=0.016;ctx.clearRect(0,0,W,H);
+    // Background glow
+    var g=ctx.createRadialGradient(cx,cy,0,cx,cy,420);
+    g.addColorStop(0,rgba(0.12));g.addColorStop(0.5,rgba(0.04));g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();ctx.arc(cx,cy,420,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+
+    var t=(time%CYCLE)/CYCLE;
+    var converge;
+    if(t<0.35) converge=easeIO(t/0.35);
+    else if(t<0.7) converge=1;
+    else {converge=1-easeIO((t-0.7)/0.3);if(t>0.98)initDots();}
+
+    // Orbit ring
+    ctx.beginPath();ctx.arc(cx,cy,orbitR,0,Math.PI*2);
+    ctx.strokeStyle=rgba(0.08+converge*0.2);ctx.lineWidth=9;
+    ctx.shadowColor=rgba(converge*0.15);ctx.shadowBlur=12;
+    ctx.stroke();ctx.shadowColor='transparent';ctx.shadowBlur=0;
+
+    // Dots
+    for(var i=0;i<count;i++){
+      var d=dots[i];
+      var targetX=cx+Math.cos(d.targetAngle)*orbitR;
+      var targetY=cy+Math.sin(d.targetAngle)*orbitR;
+      var goalX=lerp(d.farX,targetX,converge);
+      var goalY=lerp(d.farY,targetY,converge);
+      // Gentle drift when scattered
+      var drift=1-converge;
+      goalX+=Math.sin(time*0.15+d.driftPhase)*12*drift;
+      goalY+=Math.cos(time*0.12+d.driftPhase*1.3)*10*drift;
+      // Slow interpolation (no sudden jumps)
+      d.x+=(goalX-d.x)*0.025;
+      d.y+=(goalY-d.y)*0.025;
+
+      var op=0.4+converge*0.4;
+      var r=10+converge*3;
+      // Glow
+      var ng=ctx.createRadialGradient(d.x,d.y,0,d.x,d.y,r*3.5);
+      ng.addColorStop(0,rgba(op*0.4));ng.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.beginPath();ctx.arc(d.x,d.y,r*3.5,0,Math.PI*2);ctx.fillStyle=ng;ctx.fill();
+      // Core
+      ctx.beginPath();ctx.arc(d.x,d.y,r,0,Math.PI*2);ctx.fillStyle=rgba(op);ctx.fill();
+
+      // Line to center when converged
+      if(converge>0.5){
+        ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(cx,cy);
+        ctx.strokeStyle=rgba((converge-0.5)*2*0.12);ctx.lineWidth=3;ctx.stroke();
+      }
+    }
+
+    // Connecting lines between adjacent dots when locked
+    if(converge>0.6){
+      var lineOp=(converge-0.6)*2.5*0.25;
+      for(var i=0;i<count;i++){
+        var j=(i+1)%count;
+        ctx.beginPath();ctx.moveTo(dots[i].x,dots[i].y);ctx.lineTo(dots[j].x,dots[j].y);
+        ctx.strokeStyle=rgba(lineOp);ctx.lineWidth=7;
+        ctx.shadowColor=rgba(lineOp*0.3);ctx.shadowBlur=10;
+        ctx.stroke();ctx.shadowColor='transparent';ctx.shadowBlur=0;
+      }
+    }
+
+    // Center
+    var cp=0.6+converge*0.3;
+    ctx.beginPath();ctx.arc(cx,cy,14,0,Math.PI*2);ctx.fillStyle=rgba(cp);ctx.fill();
+    var pT=(time*0.12)%1;
+    ctx.beginPath();ctx.arc(cx,cy,14+pT*90,0,Math.PI*2);ctx.strokeStyle=rgba(0.1*(1-pT));ctx.lineWidth=2.5;ctx.stroke();
+    requestAnimationFrame(frame);
+  }
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){time=0;frame();}else{requestAnimationFrame(frame);}
+})();
+</script>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SECTION A - THE THESIS ══ -->
+<section class="section section--alt" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px);background:rgba(15,19,30,.48)">
+<div class="container">
+
+  <!-- Two-column: Visual left + Text right -->
+  <div class="reveal" style="display:grid;grid-template-columns:.4fr .6fr;gap:clamp(40px,5vw,72px);align-items:center">
+    
+    <!-- Left: Dossier/document visual -->
+    <div class="thesis-visual" style="display:flex;align-items:center;justify-content:center" aria-hidden="true">
+      <svg id="thesisDoc" viewBox="0 0 260 360" fill="none" style="width:100%;max-width:240px" xmlns="http://www.w3.org/2000/svg">
+        <style>
+          @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+          @keyframes checkHold{0%,100%{opacity:.55}50%{opacity:.68}}
+          .doc-sec1,.doc-sec2,.doc-sec3,.doc-sec4,.doc-check{opacity:0;animation-fill-mode:forwards;animation-play-state:paused}
+          .doc-visible .doc-sec1{animation:fadeIn 1s ease-out 0.5s forwards;animation-play-state:running}
+          .doc-visible .doc-sec2{animation:fadeIn 1s ease-out 1.3s forwards;animation-play-state:running}
+          .doc-visible .doc-sec3{animation:fadeIn 1s ease-out 2.1s forwards;animation-play-state:running}
+          .doc-visible .doc-sec4{animation:fadeIn 1s ease-out 2.9s forwards;animation-play-state:running}
+          .doc-visible .doc-check{animation:fadeIn 0.8s ease-out 3.8s forwards,checkHold 4s ease-in-out 5s infinite;animation-play-state:running}
+        </style>
+
+        <!-- Document outer frame -->
+        <rect x="20" y="20" width="220" height="320" stroke="#3A7CA5" stroke-width="2" opacity=".22" fill="none"/>
+        <rect x="30" y="30" width="200" height="300" stroke="#3A7CA5" stroke-width="1" opacity=".08" fill="none"/>
+        
+        <!-- TRIAGE label (top-right) -->
+        <text x="210" y="52" text-anchor="end" font-family="Outfit,sans-serif" font-size="11" font-weight="600" fill="#3A7CA5" opacity=".5" letter-spacing="2">TRIAGE&#8482;</text>
+        
+        <!-- Header line -->
+        <rect x="44" y="48" width="90" height="4" fill="#3A7CA5" opacity=".3"/>
+        
+        <!-- Separator -->
+        <line x1="44" y1="72" x2="216" y2="72" stroke="#3A7CA5" stroke-width="1" opacity=".12"/>
+        
+        <!-- Section 1 -->
+        <g class="doc-sec1">
+        <rect x="44" y="86" width="172" height="48" stroke="#3A7CA5" stroke-width="1" opacity=".14" fill="none"/>
+        <rect x="52" y="96" width="70" height="4" fill="#3A7CA5" opacity=".3"/>
+        <rect x="52" y="108" width="120" height="3" fill="#3A7CA5" opacity=".12"/>
+        <rect x="52" y="118" width="90" height="3" fill="#3A7CA5" opacity=".1"/>
+        </g>
+        
+        <!-- Section 2 -->
+        <g class="doc-sec2">
+        <rect x="44" y="142" width="172" height="48" stroke="#3A7CA5" stroke-width="1" opacity=".14" fill="none"/>
+        <rect x="52" y="152" width="55" height="4" fill="#3A7CA5" opacity=".3"/>
+        <rect x="52" y="164" width="130" height="3" fill="#3A7CA5" opacity=".12"/>
+        <rect x="52" y="174" width="100" height="3" fill="#3A7CA5" opacity=".1"/>
+        </g>
+        
+        <!-- Section 3 -->
+        <g class="doc-sec3">
+        <rect x="44" y="198" width="172" height="48" stroke="#3A7CA5" stroke-width="1" opacity=".14" fill="none"/>
+        <rect x="52" y="208" width="80" height="4" fill="#3A7CA5" opacity=".3"/>
+        <rect x="52" y="220" width="110" height="3" fill="#3A7CA5" opacity=".12"/>
+        <rect x="52" y="230" width="140" height="3" fill="#3A7CA5" opacity=".1"/>
+        </g>
+        
+        <!-- Section 4 -->
+        <g class="doc-sec4">
+        <rect x="44" y="254" width="172" height="48" stroke="#3A7CA5" stroke-width="1" opacity=".14" fill="none"/>
+        <rect x="52" y="264" width="65" height="4" fill="#3A7CA5" opacity=".3"/>
+        <rect x="52" y="276" width="100" height="3" fill="#3A7CA5" opacity=".12"/>
+        <rect x="52" y="286" width="120" height="3" fill="#3A7CA5" opacity=".1"/>
+        </g>
+        
+        <!-- Check mark (bottom-center, inside document) -->
+        <circle class="doc-check" cx="130" cy="321" r="12" stroke="#3A7CA5" stroke-width="1.5" opacity=".45" fill="none"/>
+        <path class="doc-check" d="M123 321 L128 326 L137 316" stroke="#3A7CA5" stroke-width="2" opacity=".55" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+
+    <!-- Right: Text -->
+    <div>
+      <p class="eyebrow" style="color:#3A7CA5;font-size:14px">The Thesis</p>
+      <h2 style="margin-bottom:20px">Structured ventures<br><span style="color:#3A7CA5">reach the investment table.</span></h2>
+      <p style="font-size:clamp(14px,1.4vw,16px);color:var(--tx-sub);line-height:1.9;max-width:85%">Siaxen designs ventures for investability from the earliest stage. Commercialization strategy is synchronized across regulatory, clinical, market, and capital dimensions from Day One, so that value compounds early and capital is deployed efficiently. By the time a venture reaches investors, the architecture is validated and operational leadership is already in place.</p>
+    </div>
+  </div>
+
+</div>
+</section>
+<script>
+(function(){
+  var doc=document.getElementById('thesisDoc');if(!doc)return;
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){doc.classList.add('doc-visible');}
+    });
+  },{threshold:0.3});
+  observer.observe(doc);
+})();
+</script>
+
+<div class="divider"></div>
+
+<!-- ══ SECTION B - THE PROCESS ══ -->
+<section class="section" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px)">
+<div class="container">
+
+  <div class="reveal">
+    <p class="eyebrow" style="color:#3A7CA5;font-size:14px">The Process</p>
+    <h2 style="margin-bottom:clamp(40px,5vw,60px)">The architecture behind<br class="br-mobile"> <span style="color:#3A7CA5">every venture.</span></h2>
+  </div>
+
+  <div class="process-grid" style="display:grid;grid-template-columns:clamp(48px,6vw,80px) 83%;gap:clamp(24px,3vw,40px);align-items:stretch">
+    
+    <!-- Left: Path Animation -->
+    <div style="position:relative" aria-hidden="true">
+      <canvas id="pathAnim" style="position:absolute;top:0;left:0;width:100%;height:100%"></canvas>
+    </div>
+
+    <!-- Right: Cards -->
+    <div style="display:flex;flex-direction:column;gap:4px">
+      <div class="card reveal-d1">
+        <div style="display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+          <svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px;flex-shrink:0"><rect x="8" y="8" width="24" height="24" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/><line x1="13" y1="14" x2="27" y2="14" stroke="#3A7CA5" stroke-width="1.5" opacity=".35"/><line x1="13" y1="20" x2="27" y2="20" stroke="#3A7CA5" stroke-width="1.5" opacity=".35"/><line x1="13" y1="26" x2="22" y2="26" stroke="#3A7CA5" stroke-width="1.5" opacity=".35"/><circle cx="28" cy="28" r="4" fill="#3A7CA5" opacity=".5"/></svg>
+          <div>
+            <h4 class="card__title" style="color:#3A7CA5">01 . TRIAGE&#8482; Validation</h4>
+            <p class="card__text">The technology has passed structured feasibility assessment across all commercialization dimensions. Commercial viability confirmed before venture creation.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card reveal-d2">
+        <div style="display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+          <svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px;flex-shrink:0"><rect x="8" y="8" width="24" height="24" stroke="#3A7CA5" stroke-width="1.5" opacity=".35"/><line x1="8" y1="20" x2="32" y2="20" stroke="#3A7CA5" stroke-width="1" opacity=".2"/><line x1="20" y1="8" x2="20" y2="32" stroke="#3A7CA5" stroke-width="1" opacity=".2"/><circle cx="20" cy="20" r="3" fill="#3A7CA5" opacity=".5"/></svg>
+          <div>
+            <h4 class="card__title" style="color:#3A7CA5">02 . Synchronized Architecture</h4>
+            <p class="card__text">Regulatory, clinical, market, and capital strategy designed as one integrated system. Each decision informed by the others. Assumptions stress-tested across dimensions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card reveal-d3">
+        <div style="display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+          <svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px;flex-shrink:0"><path d="M12 28 L20 12 L28 28" stroke="#3A7CA5" stroke-width="1.5" opacity=".4" fill="none"/><circle cx="20" cy="12" r="3" fill="#3A7CA5" opacity=".5"/><line x1="20" y1="15" x2="20" y2="28" stroke="#3A7CA5" stroke-width="1" opacity=".3"/></svg>
+          <div>
+            <h4 class="card__title" style="color:#3A7CA5">03 . Embedded Leadership</h4>
+            <p class="card__text">Operational co-founders are in place and executing the validated architecture from within the venture. Strategy and execution moving as one continuous process.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+<script>
+(function(){
+  var c=document.getElementById('pathAnim');if(!c)return;
+  var ctx=c.getContext('2d');
+  var col=[58,124,165];
+  function rgba(a){return'rgba('+col[0]+','+col[1]+','+col[2]+','+a+')';}
+  var nodes=4,time=0,W,H;
+  function resize(){W=c.offsetWidth*2;H=c.offsetHeight*2;c.width=W;c.height=H;}
+  resize();window.addEventListener('resize',resize);
+  function frame(){
+    ctx.clearRect(0,0,W,H);time+=0.016;
+    var cx=W/2,padY=H*0.02;
+    var lineTop=padY,lineBot=H-padY;
+    ctx.beginPath();ctx.moveTo(cx,lineTop);ctx.lineTo(cx,lineBot);
+    ctx.strokeStyle=rgba(0.35);ctx.lineWidth=3;ctx.stroke();
+    var nodePositions=[];
+    for(var i=0;i<nodes;i++){nodePositions.push(lineTop+(lineBot-lineTop)*((i+0.5)/nodes));}
+    var pCycle=12;
+    var pT=((time%pCycle)/pCycle);
+    var py=lineTop+(lineBot-lineTop)*pT;
+    for(var i=0;i<nodes;i++){
+      var ny=nodePositions[i];
+      var dist=Math.abs(py-ny);
+      var maxDist=H*0.08;
+      var proximity=Math.max(0,1-dist/maxDist);
+      var baseOp=0.45+proximity*0.4;
+      ctx.beginPath();ctx.arc(cx,ny,18,0,Math.PI*2);
+      ctx.strokeStyle=rgba(baseOp);ctx.lineWidth=3.5;ctx.stroke();
+      ctx.beginPath();ctx.arc(cx,ny,7,0,Math.PI*2);
+      ctx.fillStyle=rgba(baseOp+0.2);ctx.fill();
+      if(proximity>0.2){
+        var pr=18+proximity*24;
+        ctx.beginPath();ctx.arc(cx,ny,pr,0,Math.PI*2);
+        ctx.strokeStyle=rgba(proximity*0.35);ctx.lineWidth=2.5;ctx.stroke();
+        var ng=ctx.createRadialGradient(cx,ny,0,cx,ny,pr+10);
+        ng.addColorStop(0,rgba(proximity*0.2));ng.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.beginPath();ctx.arc(cx,ny,pr+10,0,Math.PI*2);ctx.fillStyle=ng;ctx.fill();
+      }
+    }
+    ctx.beginPath();ctx.arc(cx,py,7,0,Math.PI*2);
+    ctx.fillStyle=rgba(0.9);ctx.fill();
+    var pg=ctx.createRadialGradient(cx,py,0,cx,py,24);
+    pg.addColorStop(0,rgba(0.5));pg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();ctx.arc(cx,py,24,0,Math.PI*2);ctx.fillStyle=pg;ctx.fill();
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<div class="divider"></div>
+
+<!-- ══ SECTION C - WHAT YOU GAIN ══ -->
+<section class="section section--alt" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px);background:rgba(15,19,30,.48)">
+<div class="container">
+
+  <div class="reveal" style="text-align:center;max-width:720px;margin:0 auto clamp(48px,6vw,80px)">
+    <p class="eyebrow" style="color:#3A7CA5;font-size:14px;max-width:none;margin:0 auto 16px">What You Gain</p>
+    <h2>What the thesis <span style="color:#3A7CA5">delivers.</span></h2>
+  </div>
+
+  <!-- 4 dimension cards -->
+  <div class="dimensions reveal">
+    <div class="dimension reveal-d1">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><path d="M10 12 L20 8 L30 12 L30 26 L20 32 L10 26 Z" stroke="#3A7CA5" stroke-width="1.5" opacity=".4" fill="none"/><circle cx="20" cy="20" r="4" stroke="#3A7CA5" stroke-width="1.5" opacity=".6"/><circle cx="20" cy="20" r="1.5" fill="#3A7CA5" opacity=".7"/></svg>
+      </div>
+      <h4 class="dimension__title">Curated Deal Flow</h4>
+      <p class="dimension__text">TRIAGE-validated ventures with structured assumptions and coherent commercialization architecture.</p>
+    </div>
+    <div class="dimension reveal-d2">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="24" height="24" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/><path d="M14 20 L18 24 L26 16" stroke="#3A7CA5" stroke-width="1.5" opacity=".6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <h4 class="dimension__title">Structural De-Risking</h4>
+      <p class="dimension__text">Risks identified and characterized across all dimensions before external capital is committed.</p>
+    </div>
+    <div class="dimension reveal-d3">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><rect x="10" y="22" width="20" height="4" rx="1" stroke="#3A7CA5" stroke-width="1.5" opacity=".3"/><rect x="12" y="16" width="16" height="4" rx="1" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/><rect x="14" y="10" width="12" height="4" rx="1" stroke="#3A7CA5" stroke-width="1.5" opacity=".55"/><circle cx="20" cy="30" r="2" fill="#3A7CA5" opacity=".6"/></svg>
+      </div>
+      <h4 class="dimension__title">Capital Efficiency</h4>
+      <p class="dimension__text">Every unit of capital deployed against validated milestones within a synchronized strategy system.</p>
+    </div>
+    <div class="dimension reveal-d4">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><circle cx="14" cy="20" r="8" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/><circle cx="26" cy="20" r="8" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/><circle cx="20" cy="20" r="3" fill="#3A7CA5" opacity=".6"/></svg>
+      </div>
+      <h4 class="dimension__title">Aligned Incentives</h4>
+      <p class="dimension__text">Siaxen holds equity in every venture. Our return depends on the same outcome as yours.</p>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══ SECTION D - CTA FORM ══ -->
+<section class="section" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px)">
+<div class="container">
+  <div class="form-wrap reveal">
+    <p class="eyebrow" style="color:#3A7CA5;font-size:14px;text-align:center">Start the Conversation</p>
+    <h2 style="font-size:clamp(28px,4vw,44px);text-align:center;margin-bottom:clamp(32px,4vw,48px)">Discuss <span style="color:#3A7CA5">co-investment.</span></h2>
+    <form action="#" method="POST">
+      <input type="text" name="name" placeholder="Full Name" required class="form-field">
+      <input type="email" name="email" placeholder="Email Address" required class="form-field">
+      <input type="text" name="organization" placeholder="Fund / Organization" class="form-field">
+      <input type="text" name="role" placeholder="Your Role" class="form-field">
+      <textarea name="message" placeholder="How you'd like to collaborate." rows="4" class="form-field form-textarea"></textarea>
+      <button type="submit" class="btn btn-primary form-submit">Submit</button>
+    </form>
+  </div>
+</div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer" role="contentinfo">
+<div class="container">
+  <div class="footer__top">
+    <div class="footer__brand">
+      <img src="assets/Siaxen Full.svg" alt="Siaxen" style="height:38px;filter:brightness(0) invert(1)">
+      <p style="margin-top:24px">Siaxen is a MedTech venture studio that builds investor-ready companies from patented science.</p>
+      <p style="font-size:13px;color:var(--tx);margin-top:32px">Brussels, Belgium</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <div class="footer__col-title">COMPANY</div>
+        <div class="footer__links">
+          <a href="about.html">About</a>
+          <a href="dna.html">DNA</a>
+          <a href="triage.html">TRIAGE&#8482;</a>
+          <a href="insights.html">Insights</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">FOR YOU</div>
+        <div class="footer__links">
+          <a href="inventors.html">Inventors</a>
+          <a href="investors.html">Investors</a>
+          <a href="incubators.html">Incubators</a>
+          <a href="partners.html">Partners</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">CONNECT</div>
+        <div class="footer__links">
+          <a href="https://linkedin.com/company/siaxen" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/siaxen" target="_blank" rel="noopener">X</a>
+          <a href="https://instagram.com/siaxen" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:contact@siaxen.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>&copy; 2026 Siaxen. All rights reserved.</span>
+    <div class="footer__legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+    </div>
+  </div>
+</div>
+</footer>
+
+<script src="js/main.js" defer></script>
+<script>document.addEventListener('DOMContentLoaded', function(){ if(window.initHeroGrid) window.initHeroGrid(); });</script>
+<style>@media(max-width:1024px){.section [style*="grid-template-columns"]{grid-template-columns:1fr!important}.section [style*="grid-template-columns"]>[aria-hidden]{order:2}.process-grid{grid-template-columns:36px 1fr!important}.process-grid>[aria-hidden]{order:0}.thesis-visual svg{max-width:180px!important}}</style>
+</body>
+</html>

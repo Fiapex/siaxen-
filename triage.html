@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRIAGE&#8482; - Siaxen</title>
+<meta name="description" content="TRIAGE&#8482; is Siaxen's proprietary commercialization framework - a decision-grade methodology for MedTech venture feasibility and strategy.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="canonical" href="https://siaxen.com/triage">
+<meta property="og:title" content="TRIAGE&#8482; - Siaxen">
+<meta property="og:description" content="TRIAGE&#8482; is Siaxen's proprietary commercialization framework - a decision-grade methodology for MedTech venture feasibility and strategy.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://siaxen.com/triage">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+
+<!-- -- HEADER -- -->
+<header class="site-header" role="banner">
+<div class="site-header__inner">
+  <a href="index.html" class="logo" aria-label="Siaxen Home">
+    <img src="assets/Siaxen wordmark.svg" alt="Siaxen" width="110" height="24">
+  </a>
+  <nav class="nav-desktop" role="navigation" aria-label="Main navigation">
+    <a href="about.html" class="nav__link">About</a>
+    <a href="inventors.html" class="nav__link">Inventors</a>
+    <a href="investors.html" class="nav__link">Investors</a>
+    <a href="incubators.html" class="nav__link">Incubators</a>
+    <a href="partners.html" class="nav__link">Partners</a>
+    <a href="dna.html" class="nav__link">DNA</a>
+    <a href="triage.html" class="nav__link nav__link--active">TRIAGE&#8482;</a>
+    <a href="insights.html" class="nav__link">Insights</a>
+  </nav>
+  <div class="header-cta">
+    <a href="contact.html" class="header-cta__primary">Contact us</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+</header>
+
+<!-- -- MOBILE NAV -- -->
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <div class="mobile-nav__links">
+    <a href="about.html" class="mobile-nav__link">About</a>
+    <a href="inventors.html" class="mobile-nav__link">Inventors</a>
+    <a href="investors.html" class="mobile-nav__link">Investors</a>
+    <a href="incubators.html" class="mobile-nav__link">Incubators</a>
+    <a href="partners.html" class="mobile-nav__link">Partners</a>
+    <a href="dna.html" class="mobile-nav__link">DNA</a>
+    <a href="triage.html" class="mobile-nav__link">TRIAGE&#8482;</a>
+    <a href="insights.html" class="mobile-nav__link">Insights</a>
+  </div>
+  <div class="mobile-nav__bottom">
+    <a href="contact.html" class="mobile-nav__cta">Contact us</a>
+  </div>
+</div>
+
+<!-- -- PAGE HERO -- -->
+<section class="page-hero">
+<canvas id="heroGridAnim" style="position:absolute;inset:0;width:100%;height:100%;z-index:0" aria-hidden="true"></canvas>
+
+<div class="page-hero__inner">
+  <div class="page-hero__text">
+    <p class="eyebrow">TRIAGE&#8482;</p>
+    <h1>
+      <span>Decision framework behind</span><br>
+      <span style="color:#3A7CA5">every venture we build.</span>
+    </h1>
+    <p class="page-hero__desc">A proprietary assessment framework that evaluates medical technologies across regulatory, clinical, capital, and market dimensions as one interdependent system.</p>
+  </div>
+  <div class="page-hero__visual" aria-hidden="true">
+    <canvas id="heroAnim" style="width:100%;max-width:762px;aspect-ratio:1" width="1000" height="1000"></canvas>
+  </div>
+</div>
+
+<script>
+(function(){
+  var canvas=document.getElementById('heroAnim');
+  if(!canvas)return;
+  var ctx=canvas.getContext('2d');
+  var W=1000,H=1000;
+  canvas.width=W;canvas.height=H;
+  var cx=W/2,cy=H/2,time=0;
+  function rgba(a){return 'rgba(58,124,165,'+a+')';}
+  function lerp(a,b,t){return a+(b-a)*t;}
+
+  // 3 concentric diamonds (scaled up)
+  var sizes=[420,265,120];
+  var ops=[0.22,0.4,0.55];
+
+  // Diamond vertex positions
+  function dv(size,i){var a=Math.PI/2*i-Math.PI/2;return{x:cx+Math.cos(a)*size,y:cy+Math.sin(a)*size};}
+  // Point on diamond perimeter (t: 0â†’1)
+  function dPerim(size,t){t=((t%1)+1)%1;var side=Math.floor(t*4);var f=(t*4)%1;var v1=dv(size,side),v2=dv(size,(side+1)%4);return{x:lerp(v1.x,v2.x,f),y:lerp(v1.y,v2.y,f)};}
+
+  // Traveling nodes on middle diamond
+  var nodes=[
+    {t:0,   speed:0.03,r:10,op:0.75},
+    {t:0.25,speed:0.03,r:9,op:0.65},
+    {t:0.50,speed:0.03,r:9,op:0.65},
+    {t:0.75,speed:0.03,r:8,op:0.55}
+  ];
+
+  function drawDiamond(size,op,sw){
+    ctx.beginPath();
+    for(var i=0;i<4;i++){var v=dv(size,i);if(i===0)ctx.moveTo(v.x,v.y);else ctx.lineTo(v.x,v.y);}
+    ctx.closePath();ctx.strokeStyle=rgba(op);ctx.lineWidth=sw;
+    ctx.shadowColor=rgba(op*0.3);ctx.shadowBlur=12;
+    ctx.stroke();
+    ctx.shadowColor='transparent';ctx.shadowBlur=0;
+  }
+
+  function frame(){
+    time+=0.016;ctx.clearRect(0,0,W,H);
+
+    // Background glow
+    var g=ctx.createRadialGradient(cx,cy,0,cx,cy,420);
+    g.addColorStop(0,rgba(0.14));g.addColorStop(0.5,rgba(0.04));g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();ctx.arc(cx,cy,420,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+
+    // Draw diamonds
+    drawDiamond(sizes[0],ops[0],9);
+    drawDiamond(sizes[1],ops[1],9);
+    drawDiamond(sizes[2],ops[2],8);
+
+    // Energy lines: outer vertices â†’ middle vertices
+    for(var i=0;i<4;i++){
+      var outer=dv(sizes[0],i),inner=dv(sizes[1],i);
+      var lg=ctx.createLinearGradient(outer.x,outer.y,inner.x,inner.y);
+      lg.addColorStop(0,rgba(0.08));lg.addColorStop(1,rgba(0.22));
+      ctx.beginPath();ctx.moveTo(outer.x,outer.y);ctx.lineTo(inner.x,inner.y);
+      ctx.strokeStyle=lg;ctx.lineWidth=7;ctx.stroke();
+    }
+
+    // Traveling nodes on middle diamond
+    for(var i=0;i<4;i++){
+      nodes[i].t+=nodes[i].speed*0.016;
+      var pt=dPerim(sizes[1],nodes[i].t);
+      // Node glow
+      var ng=ctx.createRadialGradient(pt.x,pt.y,0,pt.x,pt.y,nodes[i].r*3.5);
+      ng.addColorStop(0,rgba(nodes[i].op*0.4));ng.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.beginPath();ctx.arc(pt.x,pt.y,nodes[i].r*3.5,0,Math.PI*2);ctx.fillStyle=ng;ctx.fill();
+      // Node core
+      ctx.beginPath();ctx.arc(pt.x,pt.y,nodes[i].r,0,Math.PI*2);ctx.fillStyle=rgba(nodes[i].op);ctx.fill();
+    }
+
+    // Center dot
+    var cp=0.8+0.12*Math.sin(time*1.0);
+    ctx.beginPath();ctx.arc(cx,cy,14,0,Math.PI*2);ctx.fillStyle=rgba(cp);ctx.fill();
+
+    // Pulse ring
+    var pT=(time*0.12)%1;
+    var pR=14+pT*90;
+    var pA=0.16*(1-pT);
+    ctx.beginPath();ctx.arc(cx,cy,pR,0,Math.PI*2);ctx.strokeStyle=rgba(pA);ctx.lineWidth=2.5;ctx.stroke();
+
+    requestAnimationFrame(frame);
+  }
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){time=0;frame();}else{requestAnimationFrame(frame);}
+})();
+</script>
+</section>
+
+<div class="divider"></div>
+
+<!-- -- SECTION A - HOW IT WORKS -- -->
+<section class="section section--alt" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px);background:rgba(15,19,30,.48)">
+<div class="container">
+
+  <!-- Two-column: Visual left + Text right -->
+  <div class="reveal" style="display:grid;grid-template-columns:.4fr .6fr;gap:clamp(40px,5vw,72px);align-items:center">
+    
+    <!-- Left: Framework visual -->
+    <div style="display:flex;align-items:center;justify-content:center" aria-hidden="true">
+      <svg viewBox="0 0 400 400" fill="none" style="width:100%;max-width:300px" xmlns="http://www.w3.org/2000/svg">
+        <style>
+          @keyframes fwPulse{0%,100%{opacity:.5}50%{opacity:.7}}
+          @keyframes fwRing{0%{r:7;opacity:.3}100%{r:30;opacity:0}}
+          .fw-dot{animation:fwPulse 4s ease-in-out infinite}
+          .fw-ring{animation:fwRing 4s ease-out infinite}
+        </style>
+        <!-- Outer ring -->
+        <circle cx="200" cy="200" r="160" stroke="#3A7CA5" stroke-width="2" opacity=".18"/>
+        <!-- Center -->
+        <circle cx="200" cy="200" r="12" fill="#3A7CA5" opacity=".18"/>
+        <circle class="fw-dot" cx="200" cy="200" r="5" fill="#3A7CA5" opacity=".5"/>
+        <circle class="fw-ring" cx="200" cy="200" r="7" stroke="#3A7CA5" stroke-width="1.5" opacity=".3" fill="none"/>
+        
+        <!-- 4 Dimension nodes on the outer ring -->
+        <!-- Top: Clinical -->
+        <circle cx="200" cy="40" r="24" stroke="#3A7CA5" stroke-width="2" opacity=".4" fill="none"/>
+        <circle cx="200" cy="40" r="8" fill="#3A7CA5" opacity=".55"/>
+        <text x="200" y="8" text-anchor="middle" font-family="Outfit,sans-serif" font-size="10" font-weight="600" fill="#3A7CA5" opacity=".7" letter-spacing="2">CLINICAL</text>
+        
+        <!-- Right: Regulatory -->
+        <circle cx="360" cy="200" r="24" stroke="#3A7CA5" stroke-width="2" opacity=".4" fill="none"/>
+        <circle cx="360" cy="200" r="8" fill="#3A7CA5" opacity=".55"/>
+        <text x="360" y="240" text-anchor="middle" font-family="Outfit,sans-serif" font-size="10" font-weight="600" fill="#3A7CA5" opacity=".7" letter-spacing="2">REGULATORY</text>
+        
+        <!-- Bottom: Market -->
+        <circle cx="200" cy="360" r="24" stroke="#3A7CA5" stroke-width="2" opacity=".4" fill="none"/>
+        <circle cx="200" cy="360" r="8" fill="#3A7CA5" opacity=".55"/>
+        <text x="200" y="396" text-anchor="middle" font-family="Outfit,sans-serif" font-size="10" font-weight="600" fill="#3A7CA5" opacity=".7" letter-spacing="2">MARKET</text>
+        
+        <!-- Left: Capital -->
+        <circle cx="40" cy="200" r="24" stroke="#3A7CA5" stroke-width="2" opacity=".4" fill="none"/>
+        <circle cx="40" cy="200" r="8" fill="#3A7CA5" opacity=".55"/>
+        <text x="40" y="240" text-anchor="middle" font-family="Outfit,sans-serif" font-size="10" font-weight="600" fill="#3A7CA5" opacity=".7" letter-spacing="2">CAPITAL</text>
+
+        <!-- Connection lines between nodes (showing interdependence) -->
+        <line x1="200" y1="64" x2="336" y2="200" stroke="#3A7CA5" stroke-width="1.5" opacity=".2"/>
+        <line x1="336" y1="200" x2="200" y2="336" stroke="#3A7CA5" stroke-width="1.5" opacity=".2"/>
+        <line x1="200" y1="336" x2="64" y2="200" stroke="#3A7CA5" stroke-width="1.5" opacity=".2"/>
+        <line x1="64" y1="200" x2="200" y2="64" stroke="#3A7CA5" stroke-width="1.5" opacity=".2"/>
+        <!-- Diagonal cross-connections -->
+        <line x1="200" y1="64" x2="200" y2="336" stroke="#3A7CA5" stroke-width="1" opacity=".1" stroke-dasharray="6 6"/>
+        <line x1="64" y1="200" x2="336" y2="200" stroke="#3A7CA5" stroke-width="1" opacity=".1" stroke-dasharray="6 6"/>
+        
+        <!-- Connection lines to center -->
+        <line x1="200" y1="64" x2="200" y2="188" stroke="#3A7CA5" stroke-width="1" opacity=".12"/>
+      </svg>
+    </div>
+
+    <!-- Right: Text -->
+    <div>
+      <p class="eyebrow" style="color:#3A7CA5;font-size:14px">How It Works</p>
+      <h2 style="margin-bottom:20px">Integrated dimensions.<br><span style="color:#3A7CA5">One decision architecture.</span></h2>
+      <p style="font-size:clamp(14px,1.4vw,16px);color:var(--tx-sub);line-height:1.9;max-width:85%">The regulatory pathway determines clinical evidence requirements. Evidence design determines reimbursement viability. Reimbursement determines capital logic. TRIAGE&#8482; maps these dependencies <em style="color:var(--tx);font-style:normal">before</em> any are executed in isolation.</p>
+    </div>
+  </div>
+
+  <!-- 4 Dimension cards below -->
+  <div class="dimensions reveal" style="margin-top:clamp(48px,6vw,80px)">
+    <div class="dimension reveal-d1">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="12" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/><circle cx="20" cy="20" r="5" stroke="#3A7CA5" stroke-width="1.5" opacity=".6"/><circle cx="20" cy="20" r="2" fill="#3A7CA5" opacity=".8"/></svg>
+      </div>
+      <h4 class="dimension__title">Scientific &amp; Clinical Evidence</h4>
+      <p class="dimension__text">Evidence strength, study design, endpoint alignment - mapped to regulatory demands and designed to support reimbursement claims simultaneously.</p>
+    </div>
+    <div class="dimension reveal-d2">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><rect x="8" y="8" width="24" height="24" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/><rect x="14" y="14" width="12" height="12" stroke="#3A7CA5" stroke-width="1.5" opacity=".6"/><circle cx="20" cy="20" r="2" fill="#3A7CA5" opacity=".8"/></svg>
+      </div>
+      <h4 class="dimension__title">Regulatory Authorization</h4>
+      <p class="dimension__text">MDR classification, Notified Body strategy, conformity assessment pathway - integrated with clinical evidence from Day One.</p>
+    </div>
+    <div class="dimension reveal-d3">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><path d="M6 30 L14 20 L22 25 L30 12 L36 16" stroke="#3A7CA5" stroke-width="1.5" opacity=".5" fill="none" stroke-linecap="round"/><circle cx="30" cy="12" r="2.5" fill="#3A7CA5" opacity=".6"/></svg>
+      </div>
+      <h4 class="dimension__title">Market Access &amp; Adoption</h4>
+      <p class="dimension__text">Reimbursement landscape, payer segmentation, health economics - aligned to the regulatory pathway and clinical evidence.</p>
+    </div>
+    <div class="dimension reveal-d4">
+      <div class="dimension__icon">
+        <svg viewBox="0 0 40 40" fill="none"><rect x="8" y="26" width="5" height="8" stroke="#3A7CA5" stroke-width="1.5" opacity=".3"/><rect x="16" y="20" width="5" height="14" stroke="#3A7CA5" stroke-width="1.5" opacity=".45"/><rect x="24" y="12" width="5" height="22" stroke="#3A7CA5" stroke-width="1.5" opacity=".6"/><circle cx="26" cy="9" r="2" fill="#3A7CA5" opacity=".7"/></svg>
+      </div>
+      <h4 class="dimension__title">Capital Strategy</h4>
+      <p class="dimension__text">Funding architecture, deployment timing, non-dilutive instruments, governed by the risk profile of all other dimensions.</p>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- -- SECTION B - WHY IT WORKS -- -->
+<section class="section" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px)">
+<div class="container">
+
+  <div class="reveal" style="display:grid;grid-template-columns:.65fr .35fr;gap:clamp(32px,4vw,56px);align-items:start">
+    
+    <!-- Left: Text -->
+    <div>
+      <p class="eyebrow" style="color:#3A7CA5;font-size:14px">Why It Works</p>
+      <h2 style="margin-bottom:20px">Designed as one system.<br><span style="color:#3A7CA5">Executed as one system.</span></h2>
+      <p style="font-size:clamp(14px,1.4vw,16px);color:var(--tx-sub);line-height:1.9;max-width:85%">The industry's operating model evaluates each dimension in isolation. A regulatory consultant assesses classification. Separately, a clinical advisor designs evidence. Independently, a market access firm models reimbursement. The result: strategies that contradict each other, timelines that compound, and capital consumed by re-work.</p>
+      <p style="font-size:clamp(14px,1.4vw,16px);color:var(--tx-sub);line-height:1.9;max-width:85%;margin-top:16px">TRIAGE&#8482; reverses this by forcing synchronization from Day One. Every strategic decision is stress-tested against every other dimension before execution begins. The equity model guarantees it: Siaxen's return depends entirely on the architecture producing an investable venture.</p>
+    </div>
+
+    <!-- Right: Validation Animation -->
+    <div style="display:flex;align-items:flex-start;justify-content:center;padding-top:clamp(80px,10vw,120px)" aria-hidden="true">
+      <canvas id="whyAnim" width="900" height="900" style="width:100%;max-width:390px;aspect-ratio:1"></canvas>
+    </div>
+  </div>
+
+</div>
+</section>
+<script>
+(function(){
+  var c=document.getElementById('whyAnim');if(!c)return;
+  var ctx=c.getContext('2d'),W=900,H=900,cx=W/2,cy=H/2,time=0;
+  var col=[58,124,165];
+  function rgba(a){return'rgba('+col[0]+','+col[1]+','+col[2]+','+a+')';}
+  function easeIO(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+  function lerp(a,b,t){return a+(b-a)*t;}
+
+  var rows=[
+    {y:150},{y:300},{y:450},{y:600}
+  ];
+  var CYCLE=10;
+
+  function frame(){
+    time+=0.016;ctx.clearRect(0,0,W,H);
+
+    // Background glow
+    var g=ctx.createRadialGradient(cx,cy,0,cx,cy,380);
+    g.addColorStop(0,rgba(0.07));g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();ctx.arc(cx,cy,380,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+
+    var cycleT=time%CYCLE;
+
+    for(var i=0;i<4;i++){
+      var row=rows[i];
+      var rowProgress=Math.max(0,Math.min(1,(cycleT-i*1.2)/1.5));
+      if(cycleT>8) rowProgress=Math.max(0,1-(cycleT-8)/2);
+
+      // Row line
+      var lineWidth=lerp(90,500,easeIO(rowProgress));
+      var lineX=cx-lineWidth/2;
+      ctx.beginPath();ctx.moveTo(lineX,row.y);ctx.lineTo(lineX+lineWidth,row.y);
+      ctx.strokeStyle=rgba(0.22+rowProgress*0.35);ctx.lineWidth=5;ctx.stroke();
+
+      // Row box
+      var boxOp=0.18+rowProgress*0.38;
+      ctx.strokeStyle=rgba(boxOp);ctx.lineWidth=4;
+      ctx.strokeRect(150,row.y-36,600,72);
+
+      // Checkmark (when validated)
+      if(rowProgress>0.8){
+        var checkOp=(rowProgress-0.8)*5*0.8;
+        ctx.beginPath();
+        ctx.moveTo(690,row.y-9);ctx.lineTo(708,row.y+9);ctx.lineTo(735,row.y-18);
+        ctx.strokeStyle=rgba(checkOp);ctx.lineWidth=5.5;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();
+        ctx.lineCap='butt';ctx.lineJoin='miter';
+      }
+
+      // Dot on left
+      ctx.beginPath();ctx.arc(120,row.y,7,0,Math.PI*2);ctx.fillStyle=rgba(0.35+rowProgress*0.5);ctx.fill();
+    }
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<div class="divider"></div>
+
+<!-- -- SECTION C - WHAT YOU GAIN -- -->
+<section class="section section--alt" style="position:relative;overflow:hidden;padding-top:clamp(70px,9vw,110px);padding-bottom:clamp(70px,9vw,110px);background:rgba(15,19,30,.48)">
+<div class="container">
+
+  <!-- Two-column: 3 outputs left + Validation Animation right -->
+  <div class="reveal">
+    <p class="eyebrow" style="color:#3A7CA5;font-size:14px">What You Gain</p>
+    <h2 style="margin-bottom:clamp(36px,4vw,56px)">What TRIAGE&#8482; produces.</h2>
+  </div>
+
+  <div style="display:grid;grid-template-columns:.6fr .4fr;gap:clamp(40px,5vw,72px);align-items:stretch">
+    
+    <!-- Left: Output items -->
+    <div>
+      <!-- 3 Output blocks stacked -->
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div class="card reveal-d1">
+          <div style="display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+            <svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px"><circle cx="20" cy="20" r="14" stroke="#3A7CA5" stroke-width="2" opacity=".35"/><path d="M12 20 L18 26 L28 14" stroke="#3A7CA5" stroke-width="2" opacity=".6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div>
+              <h4 class="card__title" style="color:#3A7CA5">Structural Coherence</h4>
+              <p class="card__text">Regulatory, clinical, market, and capital strategies that reinforce rather than contradict each other. Every pathway verified against every other.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card reveal-d2">
+          <div style="display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+            <svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px"><path d="M20 6 L20 34" stroke="#3A7CA5" stroke-width="1.5" opacity=".3"/><path d="M6 20 L34 20" stroke="#3A7CA5" stroke-width="1.5" opacity=".3"/><circle cx="20" cy="20" r="10" stroke="#3A7CA5" stroke-width="2" opacity=".4"/><circle cx="20" cy="20" r="3" fill="#3A7CA5" opacity=".6"/></svg>
+            <div>
+              <h4 class="card__title" style="color:#3A7CA5">Risk Architecture</h4>
+              <p class="card__text">Every structural risk identified, characterized, and mapped before capital is committed. No surprises from unexamined dependencies.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card reveal-d3">
+          <div style="display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start">
+            <svg viewBox="0 0 40 40" fill="none" style="width:40px;height:40px"><rect x="6" y="6" width="28" height="28" stroke="#3A7CA5" stroke-width="2" opacity=".35"/><line x1="12" y1="14" x2="28" y2="14" stroke="#3A7CA5" stroke-width="1.5" opacity=".4"/><line x1="12" y1="20" x2="24" y2="20" stroke="#3A7CA5" stroke-width="1.5" opacity=".3"/><line x1="12" y1="26" x2="20" y2="26" stroke="#3A7CA5" stroke-width="1.5" opacity=".2"/></svg>
+            <div>
+              <h4 class="card__title" style="color:#3A7CA5">Investment Readiness</h4>
+              <p class="card__text">A venture that reaches the investment table with structured assumptions, disciplined capital logic, and the coherence investors demand.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Rising Threshold Animation -->
+    <div style="display:flex;align-items:center;justify-content:center" aria-hidden="true">
+      <canvas id="outputAnim" width="900" height="900" style="width:100%;max-width:390px;aspect-ratio:1"></canvas>
+    </div>
+  </div>
+
+</div>
+</section>
+<script>
+(function(){
+  var c=document.getElementById('outputAnim');if(!c)return;
+  var ctx=c.getContext('2d'),W=900,H=900,cx=W/2,time=0;
+  var col=[58,124,165];
+  function rgba(a){return'rgba('+col[0]+','+col[1]+','+col[2]+','+a+')';}
+
+  var levels=5;
+  var topY=80,botY=820;
+  var levelSpacing=(botY-topY)/(levels-1);
+  var riseSpeed=35;
+
+  function frame(){
+    time+=0.016;ctx.clearRect(0,0,W,H);
+
+    // Background glow
+    var g=ctx.createRadialGradient(cx,H/2,0,cx,H/2,420);
+    g.addColorStop(0,rgba(0.07));g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath();ctx.arc(cx,H/2,420,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();
+
+    // Dot position (loops from bottom to top)
+    var totalDist=botY-topY+80;
+    var dotY=botY+40-((time*riseSpeed)%totalDist);
+
+    // Vertical track
+    ctx.beginPath();ctx.moveTo(cx,topY-20);ctx.lineTo(cx,botY+20);
+    ctx.strokeStyle=rgba(0.06);ctx.lineWidth=2.5;ctx.stroke();
+
+    // Level lines
+    for(var i=0;i<levels;i++){
+      var ly=topY+i*levelSpacing;
+      var passed=dotY<ly;
+      var proximity=Math.max(0,1-Math.abs(dotY-ly)/60);
+      var baseOp=passed?0.38:0.14;
+      var op=baseOp+proximity*0.4;
+      var halfW=150+proximity*70+(passed?45:0);
+
+      ctx.beginPath();ctx.moveTo(cx-halfW,ly);ctx.lineTo(cx+halfW,ly);
+      ctx.strokeStyle=rgba(op);ctx.lineWidth=5+proximity*3;
+      if(proximity>0.3){ctx.shadowColor=rgba(op*0.45);ctx.shadowBlur=14;}
+      ctx.stroke();ctx.shadowColor='transparent';ctx.shadowBlur=0;
+
+      // Level dots
+      ctx.beginPath();ctx.arc(cx-halfW-12,ly,5,0,Math.PI*2);ctx.fillStyle=rgba(op);ctx.fill();
+      ctx.beginPath();ctx.arc(cx+halfW+12,ly,5,0,Math.PI*2);ctx.fillStyle=rgba(op);ctx.fill();
+    }
+
+    // The rising dot
+    if(dotY>topY-40&&dotY<botY+40){
+      var dg=ctx.createRadialGradient(cx,dotY,0,cx,dotY,48);
+      dg.addColorStop(0,rgba(0.55));dg.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.beginPath();ctx.arc(cx,dotY,48,0,Math.PI*2);ctx.fillStyle=dg;ctx.fill();
+      ctx.beginPath();ctx.arc(cx,dotY,14,0,Math.PI*2);ctx.fillStyle=rgba(0.9);ctx.fill();
+      for(var t=1;t<4;t++){
+        ctx.beginPath();ctx.arc(cx,dotY+t*15,14-t*3,0,Math.PI*2);
+        ctx.fillStyle=rgba(0.35*(1-t*0.25));ctx.fill();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<div class="divider"></div>
+
+<!-- -- PRE-FOOTER CTA -- -->
+<section class="section cta-section">
+<div class="container">
+  <div class="reveal" style="text-align:center">
+    <p class="eyebrow" style="color:#3A7CA5;margin-bottom:20px">Next Step</p>
+    <h2 style="font-size:clamp(32px,5vw,56px)">Let's build <span class="text-accent">what matters.</span></h2>
+    <div style="margin-top:clamp(32px,4vw,48px)">
+      <a href="contact.html" class="btn btn-primary" style="padding:16px 40px;font-size:15px">Schedule a conversation</a>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- -- FOOTER -- -->
+<footer class="site-footer" role="contentinfo">
+<div class="container">
+  <div class="footer__top">
+    <div class="footer__brand">
+      <img src="assets/Siaxen Full.svg" alt="Siaxen" style="height:38px;filter:brightness(0) invert(1)">
+      <p style="margin-top:24px">Siaxen is a MedTech venture studio that builds investor-ready companies from patented science.</p>
+      <p style="font-size:13px;color:var(--tx);margin-top:32px">Brussels, Belgium</p>
+    </div>
+    <div class="footer__cols">
+      <div>
+        <div class="footer__col-title">COMPANY</div>
+        <div class="footer__links">
+          <a href="about.html">About</a>
+          <a href="dna.html">DNA</a>
+          <a href="triage.html">TRIAGE&#8482;</a>
+          <a href="insights.html">Insights</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">FOR YOU</div>
+        <div class="footer__links">
+          <a href="inventors.html">Inventors</a>
+          <a href="investors.html">Investors</a>
+          <a href="incubators.html">Incubators</a>
+          <a href="partners.html">Partners</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">CONNECT</div>
+        <div class="footer__links">
+          <a href="https://linkedin.com/company/siaxen" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://x.com/siaxen" target="_blank" rel="noopener">X</a>
+          <a href="https://instagram.com/siaxen" target="_blank" rel="noopener">Instagram</a>
+          <a href="mailto:contact@siaxen.com">Email</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>&copy; 2026 Siaxen. All rights reserved.</span>
+    <div class="footer__legal">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+    </div>
+  </div>
+</div>
+</footer>
+
+<script src="js/main.js" defer></script>
+<script>document.addEventListener('DOMContentLoaded', function(){ if(window.initHeroGrid) window.initHeroGrid(); });</script>
+<style>
+@media(max-width:1024px){
+  .section [style*="grid-template-columns"]{grid-template-columns:1fr!important}
+  #whyAnim{margin-top:-30px;margin-bottom:-40px}
+}
+</style>
+</body>
+</html>
